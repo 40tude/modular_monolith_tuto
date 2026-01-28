@@ -1,0 +1,30 @@
+use crate::Result;
+/// Console Output Adapter
+///
+/// Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
+use crate::domain;
+
+/// Adapter for writing greetings to the console (stdout).
+///
+/// This adapter prints greeting messages to standard output.
+pub struct ConsoleOutput;
+
+impl ConsoleOutput {
+    /// Creates a new `ConsoleOutput` adapter.
+    pub fn new() -> Self {
+        Self
+    }
+}
+
+impl Default for ConsoleOutput {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl domain::GreetingWriter for ConsoleOutput {
+    fn write_greeting(&self, greeting: &str) -> Result<()> {
+        println!("{}", greeting);
+        Ok(())
+    }
+}

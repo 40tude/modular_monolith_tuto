@@ -1,0 +1,21 @@
+[workspace]
+members = [
+    "crates/shared",
+    "crates/domain",
+    "crates/application",
+    "crates/adapter_console",
+    "crates/app",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[workspace.dependencies]
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1

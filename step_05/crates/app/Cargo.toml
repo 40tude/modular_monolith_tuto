@@ -1,0 +1,16 @@
+[package]
+name = "app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "step_05"
+path = "src/main.rs"
+
+[dependencies]
+shared = { path = "../shared" }
+application = { path = "../application" }
+adapter_console = { path = "../adapter_console" }
+
+[dev-dependencies]

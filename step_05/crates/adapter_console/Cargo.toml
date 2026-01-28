@@ -1,0 +1,11 @@
+[package]
+name = "adapter_console"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+shared = { path = "../shared" }
+domain = { path = "../domain" }
+
+[dev-dependencies]
