@@ -50,7 +50,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_empty_name_returns_error() {
+    fn empty_name_returns_error() {
         let result = greet("");
         assert!(result.is_err());
         let err = result.unwrap_err();

@@ -13,7 +13,7 @@
 
 use std::io::{self, Write};
 fn main() -> Result<(), String> {
-    println!("=== Greeting Service (Step 01) ===");
+    println!("=== Greeting Service (Step 00) ===");
     println!("Enter a name to greet (or 'quit' to exit):\n");
 
     loop {
@@ -85,7 +85,7 @@ mod tests {
     const TRAILER: &str = "...";
 
     #[test]
-    fn test_empty_name_returns_error() {
+    fn empty_name_returns_error() {
         let result = greet("");
         assert!(result.is_err());
         // assert_eq!(result.unwrap_err(), "Name cannot be empty");
@@ -94,14 +94,14 @@ mod tests {
     }
 
     #[test]
-    fn test_normal_greeting() {
+    fn normal_greeting() {
         let result = greet("Alice");
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), "Hello Alice.");
     }
 
     #[test]
-    fn test_roberto_special_case() {
+    fn roberto_special_case() {
         let result = greet("Roberto");
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), "Ciao Roberto!");
@@ -119,7 +119,7 @@ mod tests {
     }
 
     #[test]
-    fn test_greeting_length_limit() {
+    fn greeting_length_limit() {
         // "Hello " (6) + "." (1) = 7, so max name is 18 chars for MAX_LENGTH total
         let result = greet("ExactlyEighteenChr");
         assert!(result.is_ok());
@@ -130,7 +130,7 @@ mod tests {
     }
 
     #[test]
-    fn test_truncation_for_long_names() {
+    fn truncation_for_long_names() {
         let long_name = "ThisIsAVeryLongNameThatExceedsTheLimit";
         let result = greet(long_name);
         assert!(result.is_ok());
@@ -142,7 +142,7 @@ mod tests {
     }
 
     #[test]
-    fn test_boundary_case_nineteen_chars() {
+    fn boundary_case_nineteen_chars() {
         // 19 chars should trigger truncation (6 + 19 + 1 = 26, exceeds MAX_LENGTH)
         let name = "NineteenCharactersX";
         let result = greet(name);
