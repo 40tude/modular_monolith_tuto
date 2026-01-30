@@ -1,4 +1,4 @@
-/// Step 01: Extracted Domain
+/// Step 02: Extracted Domain
 ///
 /// This step demonstrates the separation of business logic from infrastructure.
 /// The domain module contains pure business rules that are independent of I/O.

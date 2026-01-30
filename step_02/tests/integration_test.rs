@@ -1,4 +1,4 @@
-use step_02::greet;
+use step_02::domain;
 
 const MAX_LENGTH: usize = 25;
 // const GREETING_PREFIX: &str = "Hello ";
@@ -8,7 +8,7 @@ const TRAILER: &str = "...";
 #[test]
 fn greet_integration() {
     // Test normal greeting
-    let result = greet("World");
+    let result = domain::greet("World");
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), "Hello World.");
 }
@@ -16,7 +16,7 @@ fn greet_integration() {
 #[test]
 fn roberto_integration() {
     // Test special case
-    let result = greet("Roberto");
+    let result = domain::greet("Roberto");
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), "Ciao Roberto!");
 }
@@ -24,14 +24,14 @@ fn roberto_integration() {
 #[test]
 fn empty_name_integration() {
     // Test error case
-    let result = greet("");
+    let result = domain::greet("");
     assert!(result.is_err());
 }
 
 #[test]
 fn long_name_integration() {
     // Test truncation
-    let result = greet("VeryLongNameThatWillBeTruncated");
+    let result = domain::greet("VeryLongNameThatWillBeTruncated");
     assert!(result.is_ok());
 
     let greeting = result.unwrap();

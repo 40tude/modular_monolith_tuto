@@ -12,13 +12,13 @@ cargo run
     * Create `domain_test.rs` (because `greet()` is public)
     * Create `integration_test.rs`
 
-At this point `domain_test.rs` and i`ntegration_test.rs` look very similar because we only have one component (`domain.rs`)
+At this point `domain_test.rs` and `integration_test.rs` look very similar because we only have one component (`domain.rs`)
 
 
 ## Project Structure
 
 ```
-step_01/
+step_02/
 ├── Cargo.toml
 ├── src/
 │   ├── main.rs          # Entry point + console I/O
