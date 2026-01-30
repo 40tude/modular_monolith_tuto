@@ -49,28 +49,28 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_empty_name_returns_error() {
+    fn empty_name_returns_error() {
         let result = greet("");
         assert!(result.is_err());
         assert!(matches!(result.unwrap_err(), GreetingError::EmptyName));
     }
 
     #[test]
-    fn test_normal_greeting() {
+    fn normal_greeting() {
         let result = greet("Alice");
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), "Hello Alice.");
     }
 
     #[test]
-    fn test_roberto_special_case() {
+    fn roberto_special_case() {
         let result = greet("Roberto");
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), "Ciao Roberto!");
     }
 
     #[test]
-    fn test_truncation_for_long_names() {
+    fn truncation_for_long_names() {
         let long_name = "ThisIsAVeryLongNameThatExceedsTheLimit";
         let result = greet(long_name);
         assert!(result.is_ok());

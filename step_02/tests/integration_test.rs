@@ -6,7 +6,7 @@ const MAX_LENGTH: usize = 25;
 const TRAILER: &str = "...";
 
 #[test]
-fn test_greet_integration() {
+fn greet_integration() {
     // Test normal greeting
     let result = greet("World");
     assert!(result.is_ok());
@@ -14,7 +14,7 @@ fn test_greet_integration() {
 }
 
 #[test]
-fn test_roberto_integration() {
+fn roberto_integration() {
     // Test special case
     let result = greet("Roberto");
     assert!(result.is_ok());
@@ -22,14 +22,14 @@ fn test_roberto_integration() {
 }
 
 #[test]
-fn test_empty_name_integration() {
+fn empty_name_integration() {
     // Test error case
     let result = greet("");
     assert!(result.is_err());
 }
 
 #[test]
-fn test_long_name_integration() {
+fn long_name_integration() {
     // Test truncation
     let result = greet("VeryLongNameThatWillBeTruncated");
     assert!(result.is_ok());

@@ -3,7 +3,7 @@ Now in console_input.rs we have `impl domain::NameReader for ConsoleInput {...}`
 
 
 ```powershell
-cargo test --bin step_04 test_greeting_loop_with_mocks
+cargo test --bin step_04 greeting_loop_with_mocks
 ```
 
 Z! in test/adapters_test see

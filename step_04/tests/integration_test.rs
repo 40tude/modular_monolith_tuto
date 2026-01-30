@@ -71,7 +71,7 @@ fn run_greeting_flow(input: &dyn NameReader, output: &dyn GreetingWriter) -> Res
 // ============================================================================
 
 #[test]
-fn test_greet_integration() {
+fn greet_integration() {
     let input = TestInput::new("World");
     let output = TestOutput::new();
 
@@ -82,7 +82,7 @@ fn test_greet_integration() {
 }
 
 #[test]
-fn test_roberto_integration() {
+fn roberto_integration() {
     let input = TestInput::new("Roberto");
     let output = TestOutput::new();
 
@@ -93,7 +93,7 @@ fn test_roberto_integration() {
 }
 
 #[test]
-fn test_empty_name_integration() {
+fn empty_name_integration() {
     let input = TestInput::new("");
     let output = TestOutput::new();
 
@@ -102,7 +102,7 @@ fn test_empty_name_integration() {
 }
 
 #[test]
-fn test_long_name_integration() {
+fn long_name_integration() {
     let input = TestInput::new("VeryLongNameThatWillBeTruncated");
     let output = TestOutput::new();
 
@@ -114,7 +114,7 @@ fn test_long_name_integration() {
 }
 
 #[test]
-fn test_multiple_greetings_integration() {
+fn multiple_greetings_integration() {
     let output = TestOutput::new();
 
     // Process multiple names
@@ -132,7 +132,7 @@ fn test_multiple_greetings_integration() {
 }
 
 #[test]
-fn test_end_to_end_with_dependency_injection() {
+fn end_to_end_with_dependency_injection() {
     // This test demonstrates the power of dependency injection:
     // We can test the entire flow without any real I/O
 

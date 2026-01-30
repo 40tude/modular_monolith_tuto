@@ -61,14 +61,14 @@ impl GreetingWriter for MockOutput {
 // ============================================================================
 
 #[test]
-fn test_mock_input_reader() {
+fn mock_input_reader() {
     let input = MockInput::new("Alice");
     let name = input.read_name().unwrap();
     assert_eq!(name, "Alice");
 }
 
 #[test]
-fn test_mock_output_writer() {
+fn mock_output_writer() {
     let output = MockOutput::new();
     output.write_greeting("Hello World!").unwrap();
 
@@ -78,7 +78,7 @@ fn test_mock_output_writer() {
 }
 
 #[test]
-fn test_greeting_flow_with_mocks() {
+fn greeting_flow_with_mocks() {
     // Arrange: Create mock adapters
     let input = MockInput::new("Alice");
     let output = MockOutput::new();
@@ -95,7 +95,7 @@ fn test_greeting_flow_with_mocks() {
 }
 
 #[test]
-fn test_greeting_flow_with_roberto() {
+fn greeting_flow_with_roberto() {
     let input = MockInput::new("Roberto");
     let output = MockOutput::new();
 
@@ -108,7 +108,7 @@ fn test_greeting_flow_with_roberto() {
 }
 
 #[test]
-fn test_greeting_flow_with_long_name() {
+fn greeting_flow_with_long_name() {
     let input = MockInput::new("VeryLongNameThatWillBeTruncated");
     let output = MockOutput::new();
 
@@ -122,7 +122,7 @@ fn test_greeting_flow_with_long_name() {
 }
 
 #[test]
-fn test_multiple_greetings() {
+fn multiple_greetings() {
     let output = MockOutput::new();
 
     // Write multiple greetings
@@ -160,21 +160,21 @@ impl GreetingWriter for FailingOutput {
 }
 
 #[test]
-fn test_failing_input() {
+fn failing_input() {
     let input = FailingInput;
     let result = input.read_name();
     assert!(result.is_err());
 }
 
 #[test]
-fn test_failing_output() {
+fn failing_output() {
     let output = FailingOutput;
     let result = output.write_greeting("Hello World!");
     assert!(result.is_err());
 }
 
 #[test]
-fn test_error_propagation() {
+fn error_propagation() {
     let input = FailingInput;
     let output = MockOutput::new();
 

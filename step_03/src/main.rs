@@ -127,7 +127,7 @@ mod tests {
     }
 
     #[test]
-    fn test_greeting_loop_with_mocks() {
+    fn greeting_loop_with_mocks() {
         let input = MockInput::new(vec!["Alice", "Roberto"]);
         let output = MockOutput::new();
 

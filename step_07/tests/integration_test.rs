@@ -1,7 +1,6 @@
 /// Integration tests for the complete greeting flow
 ///
 /// These tests verify that all crates work together correctly.
-
 use adapter_console::{ConsoleInput, ConsoleOutput};
 use application::GreetingService;
 use domain::{greet, GreetingWriter, NameReader};
@@ -56,14 +55,14 @@ impl GreetingWriter for MockOutput {
 // ============================================================================
 
 #[test]
-fn test_domain_greet_function() {
+fn domain_greet_function() {
     let result = greet("Alice");
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), "Hello Alice.");
 }
 
 #[test]
-fn test_service_with_mocks() {
+fn service_with_mocks() {
     let input = MockInput::new("Roberto");
     let output = MockOutput::new();
     let service = GreetingService::new();
@@ -76,7 +75,7 @@ fn test_service_with_mocks() {
 }
 
 #[test]
-fn test_complete_flow_normal_greeting() {
+fn complete_flow_normal_greeting() {
     let input = MockInput::new("World");
     let output = MockOutput::new();
     let service = GreetingService::new();
@@ -88,7 +87,7 @@ fn test_complete_flow_normal_greeting() {
 }
 
 #[test]
-fn test_complete_flow_long_name() {
+fn complete_flow_long_name() {
     let input = MockInput::new("VeryLongNameThatWillBeTruncated");
     let output = MockOutput::new();
     let service = GreetingService::new();
@@ -101,7 +100,7 @@ fn test_complete_flow_long_name() {
 }
 
 #[test]
-fn test_empty_name_error_handling() {
+fn empty_name_error_handling() {
     let result = greet("");
     assert!(result.is_err());
 }
