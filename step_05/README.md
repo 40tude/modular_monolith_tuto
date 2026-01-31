@@ -1,3 +1,11 @@
+# Step 05:
+
+> **Warning (Linux/macOS users):** The .cargo/ folder contains Windows-specific configuration (custom 	arget-dir for OneDrive, CPU flags). Delete or rename before building:
+> ```bash
+> rm -rf .cargo   # or: mv .cargo .cargo.bak
+> ```
+
+
 We now have crates for all components
 Crates are independent and in their own workspace
 Added application and app component
