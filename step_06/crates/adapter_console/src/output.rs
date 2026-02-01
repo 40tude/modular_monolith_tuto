@@ -3,6 +3,7 @@
 //! Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
 
 use domain::GreetingWriter;
+use shared::Result;
 
 /// Adapter for writing greetings to the console (stdout).
 ///
@@ -23,8 +24,8 @@ impl Default for ConsoleOutput {
 }
 
 impl GreetingWriter for ConsoleOutput {
-    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn std::error::Error>> {
-        println!("{}", greeting);
+    fn write_greeting(&self, greeting: &str) -> Result<()> {
+        println!("{greeting}");
         Ok(())
     }
 }

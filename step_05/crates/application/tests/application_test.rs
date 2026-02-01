@@ -3,7 +3,7 @@
 //! These tests demonstrate how to test the application layer
 //! using mock adapters for input and output ports.
 
-use application::{ApplicationError, GreetingService};
+use application::GreetingService;
 use domain::{GreetingWriter, NameReader};
 use shared::Result;
 
@@ -66,8 +66,7 @@ fn greeting_service_processes_valid_names() {
     let service = GreetingService::new();
 
     // Act
-    let result: std::result::Result<(), ApplicationError> =
-        service.run_interactive_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&reader, &writer);
 
     // Assert
     assert!(result.is_ok());

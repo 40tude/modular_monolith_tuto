@@ -1,9 +1,11 @@
 [workspace]
 members = [
+    "crates/shared",
     "crates/domain",
     "crates/application",
     "crates/adapter_console",
     "crates/app",
+    "crates/integration_tests",
 ]
 resolver = "3"
 
@@ -12,10 +14,7 @@ version = "0.1.0"
 edition = "2024"
 license = "MIT"
 
-# Shared dependencies across all crates
 [workspace.dependencies]
-thiserror = "2.0"
-anyhow = "1.0"
 
 [profile.release]
 strip = true

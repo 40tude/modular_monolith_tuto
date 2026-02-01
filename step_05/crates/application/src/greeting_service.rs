@@ -3,11 +3,10 @@
 //! This service orchestrates the greeting flow by coordinating
 //! between input adapters, domain logic, and output adapters.
 
-use domain::{GreetingWriter, NameReader, greet};
+use domain;
+use shared::Result;
 
-use crate::error::ApplicationError;
-
-/// Service that orchestrates the greeting process.
+/// Service that orchestrates the use cases.
 ///
 /// This service:
 /// 1. Reads a name from an input source (via `NameReader` port)
@@ -33,19 +32,17 @@ impl GreetingService {
     ///
     /// # Errors
     ///
-    /// Returns `ApplicationError` if a fatal error occurs.
-    pub fn run_interactive_loop(
+    /// Bubble-up the error returned by .read_name() and greet()
+    pub fn run_greeting_loop(
         &self,
-        input: &dyn NameReader,
-        output: &dyn GreetingWriter,
-    ) -> Result<(), ApplicationError> {
+        input: &dyn domain::NameReader,
+        output: &dyn domain::GreetingWriter,
+    ) -> Result<()> {
         loop {
-            // Read name
-            let name = input
-                .read_name()
-                .map_err(|e| ApplicationError::InputError(e.to_string()))?;
+            // Read name from input adapter
+            let name = input.read_name()?;
 
-            // Check for exit commands
+            // Exit condition
             if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
                 println!("\nGoodbye!");
                 break;
@@ -56,18 +53,17 @@ impl GreetingService {
                 continue;
             }
 
-            // Process greeting
-            match greet(&name) {
+            // Call domain logic (pure business rules)
+            match domain::greet(&name) {
                 Ok(greeting) => {
-                    output
-                        .write_greeting(&greeting)
-                        .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-                    println!(); // Extra newline for readability
+                    // Write greeting to output adapter
+                    output.write_greeting(&greeting)?;
                 }
                 Err(e) => {
-                    eprintln!("Error: {e}\n");
+                    eprintln!("Error: {}\n", e);
                 }
             }
+            println!(); // Extra newline for readability
         }
 
         Ok(())

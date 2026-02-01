@@ -1,7 +1,8 @@
 /// Business domain for greeting logic
 ///
 /// This module contains the core business rules for greeting generation.
-use crate::error::GreetingError;
+// use crate::error::GreetingError;
+use shared::Result;
 
 /// Generates a greeting according to business rules.
 ///
@@ -15,9 +16,9 @@ use crate::error::GreetingError;
 /// Returns a `GreetingError` if:
 /// - The name is empty (`GreetingError::EmptyName`)
 /// - The name exceeds reasonable limits
-pub fn greet(name: &str) -> Result<String, GreetingError> {
+pub fn greet(name: &str) -> Result<String> {
     if name.is_empty() {
-        return Err(GreetingError::EmptyName);
+        return Err("Name cannot be empty".to_string().into());
     }
 
     // Special case for Roberto
@@ -48,11 +49,18 @@ pub fn greet(name: &str) -> Result<String, GreetingError> {
 mod tests {
     use super::*;
 
+    const MAX_LENGTH: usize = 25;
+    // const GREETING_PREFIX: &str = "Hello ";
+    // const GREETING_SUFFIX: &str = ".";
+    const TRAILER: &str = "...";
+
     #[test]
     fn empty_name_returns_error() {
         let result = greet("");
         assert!(result.is_err());
-        assert!(matches!(result.unwrap_err(), GreetingError::EmptyName));
+        // assert_eq!(result.unwrap_err(), "Name cannot be empty");
+        let err = result.unwrap_err();
+        assert_eq!(err.to_string(), "Name cannot be empty");
     }
 
     #[test]
@@ -70,6 +78,28 @@ mod tests {
     }
 
     #[test]
+    fn domain_should_not_use_special_greeting_for_similar_names() {
+        // Case sensitive - "roberto" should get normal greeting
+        let result = greet("roberto");
+        assert_eq!(result.unwrap(), "Hello roberto.");
+
+        // Different name
+        let result = greet("Robert");
+        assert_eq!(result.unwrap(), "Hello Robert.");
+    }
+
+    #[test]
+    fn greeting_length_limit() {
+        // "Hello " (6) + "." (1) = 7, so max name is 18 chars for MAX_LENGTH total
+        let result = greet("ExactlyEighteenChr");
+        assert!(result.is_ok());
+
+        let greeting = result.unwrap();
+        assert_eq!(greeting, "Hello ExactlyEighteenChr.");
+        assert_eq!(greeting.len(), MAX_LENGTH);
+    }
+
+    #[test]
     fn truncation_for_long_names() {
         let long_name = "ThisIsAVeryLongNameThatExceedsTheLimit";
         let result = greet(long_name);
@@ -77,7 +107,40 @@ mod tests {
 
         let greeting = result.unwrap();
         assert!(greeting.starts_with("Hello "));
-        assert!(greeting.ends_with("..."));
-        assert_eq!(greeting.len(), 25);
+        assert!(greeting.ends_with(TRAILER));
+        assert_eq!(greeting.len(), MAX_LENGTH);
+    }
+
+    #[test]
+    fn boundary_case_nineteen_chars() {
+        // 19 chars should trigger truncation (6 + 19 + 1 = 26, exceeds MAX_LENGTH)
+        let name = "NineteenCharactersX";
+        let result = greet(name);
+        assert!(result.is_ok());
+
+        let greeting = result.unwrap();
+        assert!(greeting.ends_with(TRAILER));
+        assert_eq!(greeting.len(), MAX_LENGTH);
+    }
+
+    #[test]
+    fn domain_should_handle_unicode_names() {
+        let result = greet("José");
+        assert_eq!(result.unwrap(), "Hello José.");
+
+        let result = greet("François");
+        assert_eq!(result.unwrap(), "Hello François.");
+    }
+
+    #[test]
+    fn domain_should_truncate_long_unicode_names() {
+        // Note: Unicode characters may have different byte lengths
+        let long_unicode_name = "Müller-Öffentlicher-Straßenbahn-Überführung";
+        let result = greet(long_unicode_name);
+
+        assert!(result.is_ok());
+        let greeting = result.unwrap();
+        assert_eq!(greeting.len(), MAX_LENGTH);
+        assert!(greeting.ends_with(TRAILER));
     }
 }

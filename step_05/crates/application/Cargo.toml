@@ -9,4 +9,3 @@ shared = { path = "../shared" }
 domain = { path = "../domain" }
 
 [dev-dependencies]
-shared = { path = "../shared" }

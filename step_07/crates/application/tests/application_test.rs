@@ -1,4 +1,3 @@
-// Rust guideline compliant 2025-05-10
 //! Integration tests for the application crate.
 //!
 //! These tests demonstrate how to test the application layer

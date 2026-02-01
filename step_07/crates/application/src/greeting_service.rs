@@ -21,40 +21,6 @@ impl GreetingService {
         Self
     }
 
-    /// Executes the complete greeting flow.
-    ///
-    /// # Arguments
-    ///
-    /// * `input` - Adapter for reading names
-    /// * `output` - Adapter for writing greetings
-    ///
-    /// # Errors
-    ///
-    /// Returns `ApplicationError` if:
-    /// - Input cannot be read
-    /// - Business rules fail
-    /// - Output cannot be written
-    pub fn greet_once(
-        &self,
-        input: &dyn NameReader,
-        output: &dyn GreetingWriter,
-    ) -> Result<(), ApplicationError> {
-        // Read name from input
-        let name = input
-            .read_name()
-            .map_err(|e| ApplicationError::InputError(e.to_string()))?;
-
-        // Apply business rules
-        let greeting = greet(&name)?;
-
-        // Write greeting to output
-        output
-            .write_greeting(&greeting)
-            .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-
-        Ok(())
-    }
-
     /// Runs an interactive greeting loop.
     ///
     /// Continuously reads names and generates greetings until
@@ -96,12 +62,12 @@ impl GreetingService {
                     output
                         .write_greeting(&greeting)
                         .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-                    println!(); // Extra newline for readability
                 }
                 Err(e) => {
                     eprintln!("Error: {}\n", e);
                 }
             }
+            println!(); // Extra newline for readability
         }
 
         Ok(())

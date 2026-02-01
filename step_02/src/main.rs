@@ -8,7 +8,7 @@ use step_02::domain;
 /// Runs an interactive loop that asks the user for a name,
 /// applies greeting rules, and handles errors gracefully.
 fn main() -> Result<()> {
-    println!("=== Greeting Service (Step 01) ===");
+    println!("=== Greeting Service (Step 02) ===");
     println!("Enter a name to greet (or 'quit' to exit):\n");
 
     loop {

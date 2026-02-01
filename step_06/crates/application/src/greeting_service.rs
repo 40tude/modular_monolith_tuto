@@ -21,6 +21,39 @@ impl GreetingService {
         Self
     }
 
+    /// Processes a single greeting operation.
+    ///
+    /// This method is useful for testing and one-off greeting operations.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - Adapter for reading the name
+    /// * `output` - Adapter for writing the greeting
+    ///
+    /// # Errors
+    ///
+    /// Returns `ApplicationError` if any error occurs during the process.
+    pub fn greet_once(
+        &self,
+        input: &dyn NameReader,
+        output: &dyn GreetingWriter,
+    ) -> Result<(), ApplicationError> {
+        // Read name
+        let name = input
+            .read_name()
+            .map_err(|e| ApplicationError::InputError(e.to_string()))?;
+
+        // Process greeting
+        let greeting = greet(&name).map_err(ApplicationError::from)?;
+
+        // Write greeting
+        output
+            .write_greeting(&greeting)
+            .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
+
+        Ok(())
+    }
+
     /// Runs an interactive greeting loop.
     ///
     /// Continuously reads names and generates greetings until
@@ -62,12 +95,12 @@ impl GreetingService {
                     output
                         .write_greeting(&greeting)
                         .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-                    println!(); // Extra newline for readability
                 }
                 Err(e) => {
-                    eprintln!("Error: {}\n", e);
+                    eprintln!("Error: {e}\n");
                 }
             }
+            println!(); // Extra newline for readability
         }
 
         Ok(())

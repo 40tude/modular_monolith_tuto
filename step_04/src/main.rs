@@ -10,12 +10,12 @@ use step_04::Result;
 /// - Domain logic receives dependencies through trait objects
 /// - Easy to swap implementations without changing domain code
 fn main() -> Result<()> {
-    println!("=== Greeting Service (Step 03 - Hexagonal Architecture) ===");
+    println!("=== Greeting Service (Step 04 - Hexagonal Architecture) ===");
     println!("Enter a name to greet (or 'quit' to exit):\n");
 
     // Dependency injection: Create adapters
-    let input: adapters::ConsoleInput = adapters::ConsoleInput::new();
-    let output: adapters::ConsoleOutput = adapters::ConsoleOutput::new();
+    let input = adapters::ConsoleInput::new();
+    let output = adapters::ConsoleOutput::new();
 
     // Run the greeting loop
     run_greeting_loop(&input, &output)?;
@@ -58,12 +58,12 @@ fn run_greeting_loop(
             Ok(greeting) => {
                 // Write greeting to output adapter
                 output.write_greeting(&greeting)?;
-                println!(); // Extra newline for readability
             }
             Err(e) => {
                 eprintln!("Error: {}\n", e);
             }
         }
+        println!(); // Extra newline for readability
     }
 
     Ok(())

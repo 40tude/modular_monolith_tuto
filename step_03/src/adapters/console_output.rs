@@ -1,7 +1,7 @@
-use crate::Result;
 /// Console Output Adapter
 ///
 /// Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
+use crate::Result;
 use crate::ports;
 
 /// Adapter for writing greetings to the console (stdout).

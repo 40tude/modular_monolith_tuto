@@ -5,6 +5,7 @@
 
 use application::{ApplicationError, GreetingService};
 use domain::{GreetingWriter, NameReader};
+use shared::Result;
 
 /// Mock adapter that returns predefined names.
 struct MockNameReader {
@@ -22,7 +23,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String, Box<dyn std::error::Error>> {
+    fn read_name(&self) -> Result<String> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -51,7 +52,7 @@ impl MockGreetingWriter {
 }
 
 impl GreetingWriter for MockGreetingWriter {
-    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn std::error::Error>> {
+    fn write_greeting(&self, greeting: &str) -> Result<()> {
         self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }
@@ -65,7 +66,8 @@ fn greeting_service_processes_valid_names() {
     let service = GreetingService::new();
 
     // Act
-    let result: Result<(), ApplicationError> = service.run_interactive_loop(&reader, &writer);
+    let result: std::result::Result<(), ApplicationError> =
+        service.run_interactive_loop(&reader, &writer);
 
     // Assert
     assert!(result.is_ok());

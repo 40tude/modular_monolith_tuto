@@ -1,4 +1,3 @@
-// Rust guideline compliant 2025-05-10
 //! Integration tests for the adapter_console crate.
 //!
 //! Console adapters are inherently difficult to test because they

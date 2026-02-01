@@ -1,7 +1,6 @@
 /// Integration tests for the complete greeting flow
 ///
 /// These tests verify that all crates work together correctly.
-
 use adapter_console::{ConsoleInput, ConsoleOutput};
 use application::GreetingService;
 use domain::{greet, GreetingWriter, NameReader};

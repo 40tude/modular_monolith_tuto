@@ -9,6 +9,6 @@ pub mod output;
 
 // Re-export for convenience
 // ConsoleInput becomes public, as if it were located at the root of the adapters_console module.
-// We will still have to write `use adapter_console::{ConsoleInput, ConsoleOutput};` which is good
+// We will still have to write adapters::ConsoleInput... which is good
 pub use input::ConsoleInput;
 pub use output::ConsoleOutput;
