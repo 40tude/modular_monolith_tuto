@@ -8,7 +8,6 @@
 //! The domain has ZERO dependencies on infrastructure or adapters.
 //! It only defines what it needs through traits (ports).
 
-// pub mod error;
 pub mod greeting;
 pub mod ports;
 

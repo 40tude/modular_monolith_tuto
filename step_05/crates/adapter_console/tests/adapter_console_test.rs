@@ -26,7 +26,7 @@ fn console_output_implements_greeting_writer() {
 
 /// Compile-time verification that adapters implement required traits.
 ///
-/// This is a useful pattern to ensure adapters stay compatible
+/// This help to ensure adapters stay compatible
 /// with their port interfaces as the codebase evolves.
 #[test]
 fn adapters_implement_domain_traits() {

@@ -5,6 +5,6 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-thiserror = { workspace = true }
+shared = { path = "../shared" }
 
 [dev-dependencies]

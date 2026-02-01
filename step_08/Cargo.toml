@@ -3,14 +3,13 @@ members = [
     "crates/domain",
     "crates/application",
     "crates/adapter_console",
-    "crates/adapter_file",
     "crates/app",
 ]
 resolver = "3"
 
 [workspace.package]
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 license = "MIT"
 
 # Shared dependencies across all crates

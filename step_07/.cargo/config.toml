@@ -5,4 +5,4 @@
 rustflags = ["-C", "target-cpu=native"]
 
 # Avoid any issue with OneDrive
-target-dir = "C:/Users/phili/rust_builds/Documents/Programmation/rust/01_xp/046_modular_monolith/step_06"
+target-dir = "C:/Users/phili/rust_builds/Documents/Programmation/rust/01_xp/046_modular_monolith/step_05"

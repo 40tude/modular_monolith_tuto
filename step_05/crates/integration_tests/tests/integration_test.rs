@@ -61,6 +61,7 @@ impl GreetingWriter for MockGreetingWriter {
 fn domain_greet_function() {
     // Arrange
     let reader = MockNameReader::new(vec!["Alice", "Bob", "quit"]);
+    // let reader = MockNameReader::new(vec!["Alice", "Bob"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 

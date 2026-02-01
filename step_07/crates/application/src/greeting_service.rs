@@ -3,7 +3,7 @@
 //! This service orchestrates the greeting flow by coordinating
 //! between input adapters, domain logic, and output adapters.
 
-use domain::{greet, GreetingWriter, NameReader};
+use domain::{GreetingWriter, NameReader, greet};
 
 use crate::error::ApplicationError;
 
@@ -19,6 +19,39 @@ impl GreetingService {
     /// Creates a new greeting service.
     pub fn new() -> Self {
         Self
+    }
+
+    /// Processes a single greeting operation.
+    ///
+    /// This method is useful for testing and one-off greeting operations.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - Adapter for reading the name
+    /// * `output` - Adapter for writing the greeting
+    ///
+    /// # Errors
+    ///
+    /// Returns `ApplicationError` if any error occurs during the process.
+    pub fn greet_once(
+        &self,
+        input: &dyn NameReader,
+        output: &dyn GreetingWriter,
+    ) -> Result<(), ApplicationError> {
+        // Read name
+        let name = input
+            .read_name()
+            .map_err(|e| ApplicationError::InputError(e.to_string()))?;
+
+        // Process greeting
+        let greeting = greet(&name).map_err(ApplicationError::from)?;
+
+        // Write greeting
+        output
+            .write_greeting(&greeting)
+            .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
+
+        Ok(())
     }
 
     /// Runs an interactive greeting loop.
@@ -64,7 +97,7 @@ impl GreetingService {
                         .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
                 }
                 Err(e) => {
-                    eprintln!("Error: {}\n", e);
+                    eprintln!("Error: {e}\n");
                 }
             }
             println!(); // Extra newline for readability

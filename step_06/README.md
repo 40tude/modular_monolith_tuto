@@ -13,7 +13,7 @@ Console adapters for console are now in the same crate
 
 No anyhow or thiserror yet.
 
-crates/                                                                                                                                                                                          shared/           <- Error/Result (aucune dépendance)
+crates/                                                                                                                                                                                             shared/           <- Error/Result (aucune dépendance)
     domain/           <- dépend de shared uniquement
     application/      <- dépend de shared + domain
     adapter_console/  <- dépend de shared + domain
@@ -37,11 +37,9 @@ step_05/
     │   │   Cargo.toml
     │   └───src
     │           main.rs
-    │
     ├───application
     │   │   Cargo.toml
     │   ├───src
-    │   │       error.rs
     │   │       greeting_service.rs
     │   │       lib.rs
     │   └───tests
@@ -49,7 +47,6 @@ step_05/
     ├───domain
     │   │   Cargo.toml
     │   ├───src
-    │   │       error.rs
     │   │       greeting.rs
     │   │       lib.rs
     │   │       ports.rs

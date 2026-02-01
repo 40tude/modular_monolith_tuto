@@ -15,6 +15,9 @@ edition = "2024"
 license = "MIT"
 
 [workspace.dependencies]
+thiserror = "2.0"
+anyhow = "1.0"
+
 
 [profile.release]
 strip = true

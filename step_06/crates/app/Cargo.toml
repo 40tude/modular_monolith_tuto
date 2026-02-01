@@ -5,12 +5,13 @@ edition.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "step_05"
+name = "step_05bis"
 path = "src/main.rs"
 
 [dependencies]
 shared = { path = "../shared" }
 application = { path = "../application" }
 adapter_console = { path = "../adapter_console" }
+anyhow = "1.0"
 
 [dev-dependencies]

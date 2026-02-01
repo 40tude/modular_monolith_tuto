@@ -3,6 +3,8 @@
 //! Ports define the contracts between the domain and the outside world.
 //! They are implemented by adapters which handle the actual I/O operations.
 
+use shared::Result;
+
 /// Port for reading a name from an input source.
 ///
 /// Implementations (adapters) can read from:
@@ -19,7 +21,7 @@ pub trait NameReader {
     /// Returns an error if the name cannot be read from the source.
     /// Note: This returns a generic error (Box<dyn Error>) not GreetingError,
     /// because I/O errors are infrastructure concerns, not domain errors.
-    fn read_name(&self) -> Result<String, Box<dyn std::error::Error>>;
+    fn read_name(&self) -> Result<String>;
 }
 
 /// Port for writing a greeting to an output destination.
@@ -40,5 +42,5 @@ pub trait GreetingWriter {
     /// # Errors
     ///
     /// Returns an error if the greeting cannot be written to the destination.
-    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn std::error::Error>>;
+    fn write_greeting(&self, greeting: &str) -> Result<()>;
 }
