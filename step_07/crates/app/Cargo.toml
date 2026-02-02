@@ -5,12 +5,15 @@ edition.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "step_05"
+name = "step_07"
 path = "src/main.rs"
 
 [dependencies]
-shared = { path = "../shared" }
+domain = { path = "../domain" }
 application = { path = "../application" }
 adapter_console = { path = "../adapter_console" }
+adapter_file = { path = "../adapter_file" }
+anyhow.workspace = true
+clap = { version = "4.5", features = ["derive"] }
 
 [dev-dependencies]

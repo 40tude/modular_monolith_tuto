@@ -4,8 +4,8 @@
 
 use std::io::{self, Write};
 
+use domain::ports::PortError;
 use domain::NameReader;
-use shared::Result;
 
 /// Adapter for reading names from the console (stdin).
 ///
@@ -26,18 +26,14 @@ impl Default for ConsoleInput {
 }
 
 impl NameReader for ConsoleInput {
-    fn read_name(&self) -> Result<String> {
+    fn read_name(&self) -> Result<String, PortError> {
         // Prompt for input
         print!("> ");
-        io::stdout()
-            .flush()
-            .map_err(|e| format!("Failed to flush stdout: {e}"))?;
+        io::stdout().flush()?;
 
         // Read user input
         let mut input = String::new();
-        io::stdin()
-            .read_line(&mut input)
-            .map_err(|e| format!("Failed to read from stdin: {e}"))?;
+        io::stdin().read_line(&mut input)?;
 
         let name = input.trim().to_string();
 

@@ -1,106 +1,129 @@
-/// Integration tests for the complete greeting flow
+/// Integration tests for the complete greeting flow.
 ///
 /// These tests verify that all crates work together correctly.
-
 use application::GreetingService;
-use domain::{greet, GreetingWriter, NameReader};
+use domain::ports::PortError;
+use domain::{GreetingWriter, NameReader};
 
-// ============================================================================
 // Mock Adapters for Testing
-// ============================================================================
-
-struct MockInput {
-    name: String,
+struct MockNameReader {
+    names: Vec<String>,
+    index: std::cell::Cell<usize>,
 }
 
-impl MockInput {
-    fn new(name: &str) -> Self {
+impl MockNameReader {
+    fn new(names: Vec<&str>) -> Self {
         Self {
-            name: name.to_string(),
+            names: names.into_iter().map(String::from).collect(),
+            index: std::cell::Cell::new(0),
         }
     }
 }
 
-impl NameReader for MockInput {
-    fn read_name(&self) -> Result<String, Box<dyn std::error::Error>> {
-        Ok(self.name.clone())
+impl NameReader for MockNameReader {
+    fn read_name(&self) -> Result<String, PortError> {
+        let idx = self.index.get();
+        if idx < self.names.len() {
+            self.index.set(idx + 1);
+            Ok(self.names[idx].clone())
+        } else {
+            Ok("quit".to_owned())
+        }
     }
 }
 
-struct MockOutput {
-    written: std::cell::RefCell<Vec<String>>,
+/// Mock adapter that captures written greetings.
+struct MockGreetingWriter {
+    greetings: std::cell::RefCell<Vec<String>>,
 }
 
-impl MockOutput {
+impl MockGreetingWriter {
     fn new() -> Self {
         Self {
-            written: std::cell::RefCell::new(Vec::new()),
+            greetings: std::cell::RefCell::new(Vec::new()),
         }
     }
 
-    fn last_written(&self) -> Option<String> {
-        self.written.borrow().last().cloned()
+    fn greetings(&self) -> Vec<String> {
+        self.greetings.borrow().clone()
     }
 }
 
-impl GreetingWriter for MockOutput {
-    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn std::error::Error>> {
-        self.written.borrow_mut().push(greeting.to_string());
+impl GreetingWriter for MockGreetingWriter {
+    fn write_greeting(&self, greeting: &str) -> Result<(), PortError> {
+        self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }
 }
 
-// ============================================================================
 // Integration Tests
-// ============================================================================
-
 #[test]
 fn domain_greet_function() {
-    let result = greet("Alice");
+    let reader = MockNameReader::new(vec!["Alice", "Bob", "quit"]);
+    let writer = MockGreetingWriter::new();
+    let service = GreetingService::new();
+
+    let result = service.run_greeting_loop(&reader, &writer);
+
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), "Hello Alice.");
+    let greetings = writer.greetings();
+    assert_eq!(greetings.len(), 2);
+    assert!(greetings[0].contains("Alice"));
+    assert!(greetings[1].contains("Bob"));
 }
 
 #[test]
 fn service_with_mocks() {
-    let input = MockInput::new("Roberto");
-    let output = MockOutput::new();
+    let reader = MockNameReader::new(vec!["Roberto", "quit"]);
+    let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    let result = service.greet_once(&input, &output);
-    assert!(result.is_ok());
+    let result = service.run_greeting_loop(&reader, &writer);
 
-    let written = output.last_written().unwrap();
-    assert_eq!(written, "Ciao Roberto!");
+    assert!(result.is_ok());
+    let greetings = writer.greetings();
+    assert_eq!(greetings.len(), 1);
+    assert_eq!(greetings[0], "Ciao Roberto!");
 }
 
 #[test]
 fn complete_flow_normal_greeting() {
-    let input = MockInput::new("World");
-    let output = MockOutput::new();
+    let reader = MockNameReader::new(vec!["World", "quit"]);
+    let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    service.greet_once(&input, &output).unwrap();
+    let result = service.run_greeting_loop(&reader, &writer);
 
-    let written = output.last_written().unwrap();
-    assert_eq!(written, "Hello World.");
+    assert!(result.is_ok());
+    let greetings = writer.greetings();
+    assert_eq!(greetings.len(), 1);
+    assert_eq!(greetings[0], "Hello World.");
 }
 
 #[test]
 fn complete_flow_long_name() {
-    let input = MockInput::new("VeryLongNameThatWillBeTruncated");
-    let output = MockOutput::new();
+    let reader = MockNameReader::new(vec!["VeryLongNameThatWillBeTruncated", "quit"]);
+    let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    service.greet_once(&input, &output).unwrap();
+    let result = service.run_greeting_loop(&reader, &writer);
 
-    let greeting = output.last_written().unwrap();
-    assert_eq!(greeting.len(), 25);
-    assert!(greeting.ends_with("..."));
+    assert!(result.is_ok());
+    let greetings = writer.greetings();
+    assert_eq!(greetings.len(), 1);
+    assert_eq!(greetings[0].len(), 25);
+    assert!(greetings[0].ends_with("..."));
 }
 
 #[test]
 fn empty_name_error_handling() {
-    let result = greet("");
-    assert!(result.is_err());
+    let reader = MockNameReader::new(vec!["", "quit"]);
+    let writer = MockGreetingWriter::new();
+    let service = GreetingService::new();
+
+    let result = service.run_greeting_loop(&reader, &writer);
+
+    assert!(result.is_ok());
+    let greetings = writer.greetings();
+    assert_eq!(greetings.len(), 0);
 }

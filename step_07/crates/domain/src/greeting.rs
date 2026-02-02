@@ -1,7 +1,7 @@
-/// Business domain for greeting logic
+/// Business domain for greeting logic.
 ///
 /// This module contains the core business rules for greeting generation.
-use crate::error::GreetingError;
+use crate::error::{Error, Result};
 
 /// Generates a greeting according to business rules.
 ///
@@ -12,12 +12,10 @@ use crate::error::GreetingError;
 ///
 /// # Errors
 ///
-/// Returns a `GreetingError` if:
-/// - The name is empty (`GreetingError::EmptyName`)
-/// - The name exceeds reasonable limits
-pub fn greet(name: &str) -> Result<String, GreetingError> {
+/// Returns [`Error::EmptyName`] if the name is empty.
+pub fn greet(name: &str) -> Result<String> {
     if name.is_empty() {
-        return Err(GreetingError::EmptyName);
+        return Err(Error::EmptyName);
     }
 
     // Special case for Roberto
@@ -42,42 +40,4 @@ pub fn greet(name: &str) -> Result<String, GreetingError> {
     let truncated_name = &name[..truncate_length.min(name.len())];
 
     Ok(format!("Hello {}{}", truncated_name, TRAILER))
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn empty_name_returns_error() {
-        let result = greet("");
-        assert!(result.is_err());
-        assert!(matches!(result.unwrap_err(), GreetingError::EmptyName));
-    }
-
-    #[test]
-    fn normal_greeting() {
-        let result = greet("Alice");
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap(), "Hello Alice.");
-    }
-
-    #[test]
-    fn roberto_special_case() {
-        let result = greet("Roberto");
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap(), "Ciao Roberto!");
-    }
-
-    #[test]
-    fn truncation_for_long_names() {
-        let long_name = "ThisIsAVeryLongNameThatExceedsTheLimit";
-        let result = greet(long_name);
-        assert!(result.is_ok());
-
-        let greeting = result.unwrap();
-        assert!(greeting.starts_with("Hello "));
-        assert!(greeting.ends_with("..."));
-        assert_eq!(greeting.len(), 25);
-    }
 }

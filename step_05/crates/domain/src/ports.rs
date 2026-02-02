@@ -3,7 +3,7 @@
 //! Ports define the contracts between the domain and the outside world.
 //! They are implemented by adapters which handle the actual I/O operations.
 
-use shared::Result;
+use crate::error::Result;
 
 /// Port for reading a name from an input source.
 ///

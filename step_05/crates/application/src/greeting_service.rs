@@ -3,8 +3,8 @@
 //! This service orchestrates the greeting flow by coordinating
 //! between input adapters, domain logic, and output adapters.
 
+use crate::error::Result;
 use domain;
-use shared::Result;
 
 /// Service that orchestrates the use cases.
 ///

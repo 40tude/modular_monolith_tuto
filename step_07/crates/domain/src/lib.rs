@@ -12,7 +12,6 @@ pub mod error;
 pub mod greeting;
 pub mod ports;
 
-// Re-export commonly used items
-pub use error::GreetingError;
+pub use error::{Error, Result};
 pub use greeting::greet;
 pub use ports::{GreetingWriter, NameReader};

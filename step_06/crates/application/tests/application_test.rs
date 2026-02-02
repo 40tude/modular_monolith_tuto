@@ -4,8 +4,8 @@
 //! using mock adapters for input and output ports.
 
 use application::GreetingService;
+use domain::ports::PortError;
 use domain::{GreetingWriter, NameReader};
-use shared::Result;
 
 /// Mock adapter that returns predefined names.
 struct MockNameReader {
@@ -23,7 +23,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String> {
+    fn read_name(&self) -> Result<String, PortError> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -52,7 +52,7 @@ impl MockGreetingWriter {
 }
 
 impl GreetingWriter for MockGreetingWriter {
-    fn write_greeting(&self, greeting: &str) -> Result<()> {
+    fn write_greeting(&self, greeting: &str) -> Result<(), PortError> {
         self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }

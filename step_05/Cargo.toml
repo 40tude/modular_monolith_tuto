@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "crates/shared",
     "crates/domain",
     "crates/application",
     "crates/adapter_console",

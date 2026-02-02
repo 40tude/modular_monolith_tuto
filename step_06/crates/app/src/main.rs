@@ -1,11 +1,11 @@
 use adapter_console::{ConsoleInput, ConsoleOutput};
 use application::GreetingService;
 
-// use shared::Result;
-use anyhow::{Context, Result};
+mod error;
+use error::Result;
 
 fn main() -> Result<()> {
-    println!("=== Greeting Service (Step 06 - Modular Monolith & Hexagonal Architecture) ===");
+    println!("=== Greeting Service (Step 05 - Modular Monolith & Hexagonal Architecture) ===");
     println!("Enter a name to greet (or 'quit' to exit):\n");
 
     // Dependency injection: Create adapters
@@ -14,9 +14,7 @@ fn main() -> Result<()> {
 
     // Create application service and run
     let service = GreetingService::new();
-    service
-        .run_greeting_loop(&input, &output)
-        .context("In the loop")?;
+    service.run_greeting_loop(&input, &output)?;
 
     Ok(())
 }

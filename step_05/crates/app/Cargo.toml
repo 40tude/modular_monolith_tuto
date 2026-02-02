@@ -9,7 +9,6 @@ name = "step_05"
 path = "src/main.rs"
 
 [dependencies]
-shared = { path = "../shared" }
 application = { path = "../application" }
 adapter_console = { path = "../adapter_console" }
 

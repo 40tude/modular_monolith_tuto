@@ -2,8 +2,8 @@
 //!
 //! Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
 
+use crate::error::Result;
 use domain::GreetingWriter;
-use shared::Result;
 
 /// Adapter for writing greetings to the console (stdout).
 ///

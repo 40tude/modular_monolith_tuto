@@ -5,7 +5,7 @@
 use std::io::{self, Write};
 
 use domain::NameReader;
-use shared::Result;
+use crate::error::Result;
 
 /// Adapter for reading names from the console (stdin).
 ///

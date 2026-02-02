@@ -1,9 +1,9 @@
 [workspace]
 members = [
-    "crates/shared",
     "crates/domain",
     "crates/application",
     "crates/adapter_console",
+    "crates/adapter_file",
     "crates/app",
     "crates/integration_tests",
 ]
@@ -15,6 +15,9 @@ edition = "2024"
 license = "MIT"
 
 [workspace.dependencies]
+thiserror = "2.0"
+anyhow = "1.0"
+
 
 [profile.release]
 strip = true

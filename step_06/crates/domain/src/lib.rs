@@ -8,9 +8,10 @@
 //! The domain has ZERO dependencies on infrastructure or adapters.
 //! It only defines what it needs through traits (ports).
 
+pub mod error;
 pub mod greeting;
 pub mod ports;
 
-// Re-export commonly used items
+pub use error::{Error, Result};
 pub use greeting::greet;
 pub use ports::{GreetingWriter, NameReader};

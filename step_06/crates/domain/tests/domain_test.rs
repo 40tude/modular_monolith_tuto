@@ -13,8 +13,7 @@ fn empty_name_returns_error() {
     assert!(result.is_err());
     // assert_eq!(result.unwrap_err(), "Name cannot be empty");
     let err = result.unwrap_err();
-    // assert_eq!(err.to_string(), "Name cannot be empty");
-    assert_eq!(err.to_string(), "Custom error: Name cannot be empty");
+    assert_eq!(err.to_string(), "Name cannot be empty");
 }
 
 #[test]

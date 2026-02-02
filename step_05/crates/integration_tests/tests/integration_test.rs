@@ -2,8 +2,7 @@
 ///
 /// These tests verify that all crates work together correctly.
 use application::GreetingService;
-use domain::{GreetingWriter, NameReader};
-use shared::Result;
+use domain::{GreetingWriter, NameReader, error::Result};
 
 // Mock Adapters for Testing
 struct MockNameReader {

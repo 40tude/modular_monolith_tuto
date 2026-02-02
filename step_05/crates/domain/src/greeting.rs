@@ -1,8 +1,7 @@
 /// Business domain for greeting logic
 ///
 /// This module contains the core business rules for greeting generation.
-// use crate::error::GreetingError;
-use shared::Result;
+use crate::error::Result;
 
 /// Generates a greeting according to business rules.
 ///

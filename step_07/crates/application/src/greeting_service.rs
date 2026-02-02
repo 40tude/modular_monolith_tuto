@@ -3,11 +3,9 @@
 //! This service orchestrates the greeting flow by coordinating
 //! between input adapters, domain logic, and output adapters.
 
-use domain::{GreetingWriter, NameReader, greet};
+use crate::error::{Error, Result};
 
-use crate::error::ApplicationError;
-
-/// Service that orchestrates the greeting process.
+/// Service that orchestrates the use cases.
 ///
 /// This service:
 /// 1. Reads a name from an input source (via `NameReader` port)
@@ -23,34 +21,17 @@ impl GreetingService {
 
     /// Processes a single greeting operation.
     ///
-    /// This method is useful for testing and one-off greeting operations.
-    ///
-    /// # Arguments
-    ///
-    /// * `input` - Adapter for reading the name
-    /// * `output` - Adapter for writing the greeting
-    ///
     /// # Errors
     ///
-    /// Returns `ApplicationError` if any error occurs during the process.
+    /// Returns [`Error`] if any step in the greeting pipeline fails.
     pub fn greet_once(
         &self,
-        input: &dyn NameReader,
-        output: &dyn GreetingWriter,
-    ) -> Result<(), ApplicationError> {
-        // Read name
-        let name = input
-            .read_name()
-            .map_err(|e| ApplicationError::InputError(e.to_string()))?;
-
-        // Process greeting
-        let greeting = greet(&name).map_err(ApplicationError::from)?;
-
-        // Write greeting
-        output
-            .write_greeting(&greeting)
-            .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-
+        input: &dyn domain::NameReader,
+        output: &dyn domain::GreetingWriter,
+    ) -> Result<()> {
+        let name = input.read_name().map_err(Error::Adapter)?;
+        let greeting = domain::greet(&name)?;
+        output.write_greeting(&greeting).map_err(Error::Adapter)?;
         Ok(())
     }
 
@@ -59,47 +40,29 @@ impl GreetingService {
     /// Continuously reads names and generates greetings until
     /// the user enters "quit" or "exit".
     ///
-    /// # Arguments
-    ///
-    /// * `input` - Adapter for reading names
-    /// * `output` - Adapter for writing greetings
-    ///
     /// # Errors
     ///
-    /// Returns `ApplicationError` if a fatal error occurs.
-    pub fn run_interactive_loop(
+    /// Bubbles up errors from adapters or domain logic.
+    pub fn run_greeting_loop(
         &self,
-        input: &dyn NameReader,
-        output: &dyn GreetingWriter,
-    ) -> Result<(), ApplicationError> {
+        input: &dyn domain::NameReader,
+        output: &dyn domain::GreetingWriter,
+    ) -> Result<()> {
         loop {
-            // Read name
-            let name = input
-                .read_name()
-                .map_err(|e| ApplicationError::InputError(e.to_string()))?;
+            let name = input.read_name().map_err(Error::Adapter)?;
 
-            // Check for exit commands
             if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
                 println!("\nGoodbye!");
                 break;
             }
 
-            // Skip empty input
             if name.is_empty() {
                 continue;
             }
 
-            // Process greeting
-            match greet(&name) {
-                Ok(greeting) => {
-                    output
-                        .write_greeting(&greeting)
-                        .map_err(|e| ApplicationError::OutputError(e.to_string()))?;
-                }
-                Err(e) => {
-                    eprintln!("Error: {e}\n");
-                }
-            }
+            let greeting = domain::greet(&name)?;
+            output.write_greeting(&greeting).map_err(Error::Adapter)?;
+
             println!(); // Extra newline for readability
         }
 

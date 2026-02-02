@@ -1,6 +1,8 @@
 use adapter_console::{ConsoleInput, ConsoleOutput};
 use application::GreetingService;
-use shared::Result;
+
+mod error;
+use error::Result;
 
 fn main() -> Result<()> {
     println!("=== Greeting Service (Step 05 - Modular Monolith & Hexagonal Architecture) ===");

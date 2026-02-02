@@ -2,8 +2,13 @@
 //!
 //! Ports define the contracts between the domain and the outside world.
 //! They are implemented by adapters which handle the actual I/O operations.
+//!
+//! Port methods return `Result<T, Box<dyn std::error::Error + Send + Sync>>`
+//! so adapters are free to return their own error types without depending
+//! on domain errors.
 
-use shared::Result;
+/// Boxed error type used by port trait methods.
+pub type PortError = Box<dyn std::error::Error + Send + Sync>;
 
 /// Port for reading a name from an input source.
 ///
@@ -21,7 +26,7 @@ pub trait NameReader {
     /// Returns an error if the name cannot be read from the source.
     /// Note: This returns a generic error (Box<dyn Error>) not GreetingError,
     /// because I/O errors are infrastructure concerns, not domain errors.
-    fn read_name(&self) -> Result<String>;
+    fn read_name(&self) -> std::result::Result<String, PortError>;
 }
 
 /// Port for writing a greeting to an output destination.
@@ -42,5 +47,5 @@ pub trait GreetingWriter {
     /// # Errors
     ///
     /// Returns an error if the greeting cannot be written to the destination.
-    fn write_greeting(&self, greeting: &str) -> Result<()>;
+    fn write_greeting(&self, greeting: &str) -> std::result::Result<(), PortError>;
 }
