@@ -6,18 +6,19 @@
 > ```
 
 
-We now have crates for all components
-Crates are independent and in their own workspace
-Added application and app component
-Console adapters for console are now in the same crate
+* We now have crates for all components
+* Crates are independent and in their own workspace
+* Added `application`, `app`, `integration_test` and `shared` (errors) component
+* Console adapters for console I/O are now in the same crate
 
-No anyhow or thiserror yet.
+```text
 
 crates/                                                                                                                                                                                             shared/           <- Error/Result (aucune dépendance)
     domain/           <- dépend de shared uniquement
     application/      <- dépend de shared + domain
     adapter_console/  <- dépend de shared + domain
     app/              <- dépend de tous
+```
 
 
 

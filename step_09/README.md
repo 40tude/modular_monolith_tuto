@@ -6,9 +6,9 @@
 > ```
 
 
-Add adapter_file
-Add once mode
-Add clap
+* Add adapter_file
+* Add once mode
+* Add clap
 
 
 ## Usage

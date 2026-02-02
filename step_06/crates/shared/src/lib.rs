@@ -1,4 +1,3 @@
-// Rust guideline compliant 2025-05-10
 //! Shared types and utilities for the application.
 //!
 //! This crate provides common type aliases used across all layers
@@ -8,16 +7,14 @@
 // Common error type alias using dynamic dispatch.
 // pub type Error = Box<dyn std::error::Error>;
 
-// Common result type alias.
-// pub type Result<T> = std::result::Result<T, Error>;
-
 use thiserror::Error;
 
+// Common result type alias.
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, Error)]
 pub enum Error {
-    #[error("custom error: {0}")]
+    #[error("Custom error: {0}")]
     Custom(String),
 
     #[error(transparent)]
