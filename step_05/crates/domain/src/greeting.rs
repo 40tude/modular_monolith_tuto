@@ -1,3 +1,5 @@
+// greeting.rs
+
 /// Business domain for greeting logic
 ///
 /// This module contains the core business rules for greeting generation.

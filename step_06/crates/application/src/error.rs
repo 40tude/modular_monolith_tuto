@@ -1,3 +1,5 @@
+// error.rs
+
 //! Application-layer error types.
 
 /// Errors produced by the application layer.

@@ -1,3 +1,5 @@
+// lib.rs
+
 //! Console Adapter Crate.
 //!
 //! This crate provides console I/O adapters:

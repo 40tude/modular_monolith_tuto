@@ -1,3 +1,5 @@
+// mixed_example.rs
+
 /// Example: File to Console
 ///
 /// Demonstrates reading from a file and writing to console.

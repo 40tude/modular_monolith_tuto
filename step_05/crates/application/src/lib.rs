@@ -1,3 +1,5 @@
+// lib.rs
+
 //! Application Crate - Use Cases and Orchestration.
 //!
 //! This crate contains:

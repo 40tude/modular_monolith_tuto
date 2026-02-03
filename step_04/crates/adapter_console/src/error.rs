@@ -1,3 +1,5 @@
+// error.rs
+
 //! Error types for the adapter_console crate.
 
 /// Common error type alias using dynamic dispatch.

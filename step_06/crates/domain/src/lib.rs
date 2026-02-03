@@ -1,3 +1,5 @@
+// lib.rs
+
 //! Domain Crate - Core Business Logic.
 //!
 //! This crate contains:

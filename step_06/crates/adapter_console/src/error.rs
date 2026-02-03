@@ -1,3 +1,5 @@
+// error.rs
+
 //! Error types for the console adapter crate.
 
 /// Errors produced by console I/O adapters.

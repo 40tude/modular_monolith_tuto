@@ -1,3 +1,5 @@
+// ports.rs
+
 //! Ports (Interfaces) for the Hexagonal Architecture.
 //!
 //! Ports define the contracts between the domain and the outside world.

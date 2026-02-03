@@ -1,3 +1,5 @@
+// error.rs
+
 //! Domain error types.
 
 /// Errors produced by domain business rules.

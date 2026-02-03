@@ -1,3 +1,5 @@
+// adapter_file_test.rs
+
 //! Tests for the adapter_file crate.
 
 use adapter_file::{FileInput, FileOutput};

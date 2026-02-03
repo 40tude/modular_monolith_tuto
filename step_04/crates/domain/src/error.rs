@@ -1,3 +1,5 @@
+// error.rs
+
 //! Error types for the domain crate.
 
 /// Common error type alias using dynamic dispatch.

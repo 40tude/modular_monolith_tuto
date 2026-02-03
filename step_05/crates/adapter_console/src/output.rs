@@ -1,3 +1,5 @@
+// output.rs
+
 //! Console Output Adapter.
 //!
 //! Implements the `GreetingWriter` port for writing greetings to standard output (stdout).

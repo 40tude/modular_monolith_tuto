@@ -1,3 +1,5 @@
+// domain_test.rs
+
 /// Unit tests specifically for domain logic
 /// These tests verify business rules in isolation
 use step_03::domain::greet;

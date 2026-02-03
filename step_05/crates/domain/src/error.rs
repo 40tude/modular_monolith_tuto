@@ -1,6 +1,6 @@
 // error.rs
 
-//! Custom Error variants for the domain crate.
+//! Custom error variants for the domain crate.
 
 /// Errors produced by domain business rules.
 #[derive(Debug, thiserror::Error)]

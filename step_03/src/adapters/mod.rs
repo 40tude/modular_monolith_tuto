@@ -1,3 +1,5 @@
+// mod.rs
+
 /// Adapters (Implementations) for the Hexagonal Architecture
 ///
 /// Adapters are concrete implementations of ports (traits).

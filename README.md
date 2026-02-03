@@ -5,6 +5,8 @@
 > rm -rf .cargo   # or: mv .cargo .cargo.bak
 > ```
 
+* An 7-project progression from Hello World to a fully decoupled, I/O-agnostic application using traits and crates.
+* Read this [page](https://www.40tude.fr/docs/06_programmation/rust/025_modular_monolith/modular_monolith_00.html)
 
 ## License
 

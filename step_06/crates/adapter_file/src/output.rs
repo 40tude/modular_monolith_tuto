@@ -1,3 +1,5 @@
+// output.rs
+
 //! File Output Adapter.
 //!
 //! Implements the `GreetingWriter` port for writing greetings to a file.

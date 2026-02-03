@@ -1,3 +1,5 @@
+// integration_test.rs
+
 /// Integration tests for the complete greeting flow
 ///
 /// These tests verify that all crates work together correctly.

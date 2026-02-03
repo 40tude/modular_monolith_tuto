@@ -1,3 +1,5 @@
+// input.rs
+
 //! Console Input Adapter.
 //!
 //! Implements the `NameReader` port for reading names from standard input (stdin).

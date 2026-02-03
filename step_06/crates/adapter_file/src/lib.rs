@@ -1,3 +1,5 @@
+// lib.rs
+
 //! File Adapter Crate
 //!
 //! This crate provides file I/O adapters:

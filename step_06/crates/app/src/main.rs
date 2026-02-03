@@ -1,3 +1,5 @@
+// main.rs
+
 use adapter_console::{ConsoleInput, ConsoleOutput};
 use adapter_file::{FileInput, FileOutput};
 use application::GreetingService;

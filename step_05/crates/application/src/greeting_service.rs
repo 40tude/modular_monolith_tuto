@@ -1,3 +1,5 @@
+// greeting_service.rs
+
 //! Greeting Service - Application Layer.
 //!
 //! This service orchestrates the greeting flow by coordinating

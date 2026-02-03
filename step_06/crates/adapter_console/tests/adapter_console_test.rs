@@ -1,3 +1,5 @@
+// adapter_console_test.rs
+
 //! Integration tests for the adapter_console crate.
 //!
 //! Console adapters are inherently difficult to test because they

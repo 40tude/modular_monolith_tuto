@@ -1,3 +1,5 @@
+// console_example.rs
+
 /// Example: Console to Console
 ///
 /// Demonstrates reading from console and writing to console.

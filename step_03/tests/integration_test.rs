@@ -1,3 +1,5 @@
+// integration_test.rs
+
 /// End-to-end integration tests
 ///
 /// These tests verify the complete greeting flow using dependency injection

@@ -1,13 +1,12 @@
-// input.r
+// input.rs
 
 //! Console Input Adapter.
 //!
 //! Implements the `NameReader` port for reading names from standard input (stdin).
 
-use std::io::{self, Write};
-
 use crate::error::Result;
 use domain::NameReader;
+use std::io::{self, Write};
 
 /// Adapter for reading names from the console (stdin).
 ///

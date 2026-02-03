@@ -1,3 +1,5 @@
+// error.rs
+
 //! Error types for the application crate.
 
 /// Errors produced by the application layer.

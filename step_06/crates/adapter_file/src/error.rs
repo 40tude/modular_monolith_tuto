@@ -1,3 +1,5 @@
+// error.rs
+
 //! Error types for the file adapter crate.
 
 use std::path::PathBuf;

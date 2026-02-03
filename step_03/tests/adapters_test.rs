@@ -1,3 +1,5 @@
+// adapters_test.rs
+
 /// Tests for adapters using mock implementations
 ///
 /// These tests demonstrate how hexagonal architecture makes testing easier

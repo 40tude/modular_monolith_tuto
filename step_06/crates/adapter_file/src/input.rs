@@ -1,3 +1,5 @@
+// input.rs
+
 //! File Input Adapter.
 //!
 //! Implements the `NameReader` port for reading names from a file.
