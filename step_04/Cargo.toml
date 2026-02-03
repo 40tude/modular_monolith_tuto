@@ -1,15 +1,19 @@
-[package]
-name = "step_04"
+[workspace]
+members = [
+    "crates/domain",
+    "crates/application",
+    "crates/adapter_console",
+    "crates/app",
+    "crates/integration_tests",
+]
+resolver = "3"
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 
-[[bin]]
-name = "step_04"
-path = "src/main.rs"
-
-[dependencies]
-
-[dev-dependencies]
+[workspace.dependencies]
 
 [profile.release]
 strip = true

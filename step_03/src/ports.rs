@@ -1,3 +1,5 @@
+// ports.rs
+
 /// Ports (Interfaces) for the Hexagonal Architecture
 ///
 /// Ports define the contracts between the domain and the outside world.
@@ -7,7 +9,7 @@
 /// - `NameReader`: For reading names from various sources (console, file, HTTP, etc.)
 /// - `GreetingWriter`: For writing greetings to various destinations (console, file, etc.)
 ///
-use crate::Result;
+use crate::error::Result;
 
 /// Port for reading a name from an input source.
 ///

@@ -1,8 +1,9 @@
+// main.rs
+
 use step_03::adapters;
 use step_03::domain;
+use step_03::error::Result;
 use step_03::ports;
-
-use step_03::Result;
 
 /// Application entry point with dependency injection.
 ///

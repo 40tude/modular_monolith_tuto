@@ -1,4 +1,6 @@
-use crate::Result;
+// domain.rs
+
+use crate::error::Result;
 
 /// Business domain for greeting logic
 /// Generates a greeting according to business rules.
@@ -33,7 +35,7 @@ pub fn greet(name: &str) -> Result<String> {
 
     // Name is too long, truncate and add ellipsis
     let truncate_length = MAX_LENGTH - GREETING_PREFIX.len() - TRAILER.len();
-
     let truncated_name = &name[..truncate_length.min(name.len())];
+
     Ok(format!("Hello {}{}", truncated_name, TRAILER))
 }

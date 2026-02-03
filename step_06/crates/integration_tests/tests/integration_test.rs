@@ -1,8 +1,8 @@
-/// Integration tests for the complete greeting flow
+/// Integration tests for the complete greeting flow.
 ///
 /// These tests verify that all crates work together correctly.
 use application::GreetingService;
-use domain::ports::Result;
+use domain::ports::PortError;
 use domain::{GreetingWriter, NameReader};
 
 // Mock Adapters for Testing
@@ -21,7 +21,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String> {
+    fn read_name(&self) -> Result<String, PortError> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -50,7 +50,7 @@ impl MockGreetingWriter {
 }
 
 impl GreetingWriter for MockGreetingWriter {
-    fn write_greeting(&self, greeting: &str) -> Result<()> {
+    fn write_greeting(&self, greeting: &str) -> Result<(), PortError> {
         self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }
@@ -59,16 +59,12 @@ impl GreetingWriter for MockGreetingWriter {
 // Integration Tests
 #[test]
 fn domain_greet_function() {
-    // Arrange
     let reader = MockNameReader::new(vec!["Alice", "Bob", "quit"]);
-    // let reader = MockNameReader::new(vec!["Alice", "Bob"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    // Act
     let result = service.run_greeting_loop(&reader, &writer);
 
-    // Assert
     assert!(result.is_ok());
     let greetings = writer.greetings();
     assert_eq!(greetings.len(), 2);
@@ -82,10 +78,8 @@ fn service_with_mocks() {
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    // Act
     let result = service.run_greeting_loop(&reader, &writer);
 
-    // Assert
     assert!(result.is_ok());
     let greetings = writer.greetings();
     assert_eq!(greetings.len(), 1);
@@ -98,10 +92,8 @@ fn complete_flow_normal_greeting() {
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    // Act
     let result = service.run_greeting_loop(&reader, &writer);
 
-    // Assert
     assert!(result.is_ok());
     let greetings = writer.greetings();
     assert_eq!(greetings.len(), 1);
@@ -114,10 +106,8 @@ fn complete_flow_long_name() {
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    // Act
     let result = service.run_greeting_loop(&reader, &writer);
 
-    // Assert
     assert!(result.is_ok());
     let greetings = writer.greetings();
     assert_eq!(greetings.len(), 1);
@@ -131,10 +121,8 @@ fn empty_name_error_handling() {
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
-    // Act
     let result = service.run_greeting_loop(&reader, &writer);
 
-    // Assert
     assert!(result.is_ok());
     let greetings = writer.greetings();
     assert_eq!(greetings.len(), 0);

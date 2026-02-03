@@ -19,35 +19,43 @@ impl GreetingService {
         Self
     }
 
+    /// Processes a single greeting operation.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error`] if any step in the greeting pipeline fails.
+    pub fn greet_once(
+        &self,
+        input: &dyn domain::NameReader,
+        output: &dyn domain::GreetingWriter,
+    ) -> Result<()> {
+        let name = input.read_name().map_err(Error::Adapter)?;
+        let greeting = domain::greet(&name)?;
+        output.write_greeting(&greeting).map_err(Error::Adapter)?;
+        Ok(())
+    }
+
     /// Runs an interactive greeting loop.
     ///
     /// Continuously reads names and generates greetings until
     /// the user enters "quit" or "exit".
     ///
-    /// # Arguments
-    ///
-    /// * `input` - Adapter for reading names
-    /// * `output` - Adapter for writing greetings
-    ///
     /// # Errors
     ///
-    /// Bubble-up the error returned by .read_name() and greet()
+    /// Bubbles up errors from adapters or domain logic.
     pub fn run_greeting_loop(
         &self,
         input: &dyn domain::NameReader,
         output: &dyn domain::GreetingWriter,
     ) -> Result<()> {
         loop {
-            // Read name from input adapter
             let name = input.read_name().map_err(Error::Adapter)?;
 
-            // Exit condition
             if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
                 println!("\nGoodbye!");
                 break;
             }
 
-            // Skip empty input
             if name.is_empty() {
                 continue;
             }

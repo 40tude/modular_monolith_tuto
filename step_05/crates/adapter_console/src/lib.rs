@@ -4,7 +4,7 @@
 //! - `ConsoleInput`: Reads names from stdin
 //! - `ConsoleOutput`: Writes greetings to stdout
 
-pub mod error;
+// pub mod error;
 pub mod input;
 pub mod output;
 

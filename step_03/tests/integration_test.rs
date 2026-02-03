@@ -4,7 +4,7 @@
 /// with mock adapters, demonstrating how the ports and adapters work together.
 use step_03::domain::greet;
 // Traits must be in scope to call their methods (e.g., `input.read_name()`).
-use step_03::Result;
+use step_03::error::Result;
 use step_03::ports::{GreetingWriter, NameReader};
 
 // ============================================================================

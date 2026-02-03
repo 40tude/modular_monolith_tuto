@@ -1,7 +1,7 @@
 /// Business domain for greeting logic
 ///
 /// This module contains the core business rules for greeting generation.
-use crate::error::Result;
+use crate::error::{Error, Result};
 
 /// Generates a greeting according to business rules.
 ///
@@ -12,12 +12,10 @@ use crate::error::Result;
 ///
 /// # Errors
 ///
-/// Returns a `GreetingError` if:
-/// - The name is empty (`GreetingError::EmptyName`)
-/// - The name exceeds reasonable limits
+/// Returns [`Error::EmptyName`] if the name is empty.
 pub fn greet(name: &str) -> Result<String> {
     if name.is_empty() {
-        return Err("Name cannot be empty".to_string().into());
+        return Err(Error::EmptyName);
     }
 
     // Special case for Roberto

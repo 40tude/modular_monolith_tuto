@@ -1,19 +1,16 @@
-/// Unit tests specifically for domain logic
-/// These tests verify business rules in isolation
+/// Unit tests specifically for domain logic.
+/// These tests verify business rules in isolation.
 use domain::greet;
 
 const MAX_LENGTH: usize = 25;
-// const GREETING_PREFIX: &str = "Hello ";
-// const GREETING_SUFFIX: &str = ".";
 const TRAILER: &str = "...";
 
 #[test]
 fn empty_name_returns_error() {
     let result = greet("");
     assert!(result.is_err());
-    // assert_eq!(result.unwrap_err(), "Name cannot be empty");
     let err = result.unwrap_err();
-    assert_eq!(err.to_string(), "Name cannot be empty");
+    assert_eq!(err.to_string(), "name cannot be empty");
 }
 
 #[test]
@@ -32,18 +29,15 @@ fn roberto_special_case() {
 
 #[test]
 fn domain_should_not_use_special_greeting_for_similar_names() {
-    // Case sensitive - "roberto" should get normal greeting
     let result = greet("roberto");
     assert_eq!(result.unwrap(), "Hello roberto.");
 
-    // Different name
     let result = greet("Robert");
     assert_eq!(result.unwrap(), "Hello Robert.");
 }
 
 #[test]
 fn greeting_length_limit() {
-    // "Hello " (6) + "." (1) = 7, so max name is 18 chars for MAX_LENGTH total
     let result = greet("ExactlyEighteenChr");
     assert!(result.is_ok());
 
@@ -66,7 +60,6 @@ fn truncation_for_long_names() {
 
 #[test]
 fn boundary_case_nineteen_chars() {
-    // 19 chars should trigger truncation (6 + 19 + 1 = 26, exceeds MAX_LENGTH)
     let name = "NineteenCharactersX";
     let result = greet(name);
     assert!(result.is_ok());
@@ -78,17 +71,16 @@ fn boundary_case_nineteen_chars() {
 
 #[test]
 fn domain_should_handle_unicode_names() {
-    let result = greet("José");
-    assert_eq!(result.unwrap(), "Hello José.");
+    let result = greet("Jose\u{0301}");
+    assert_eq!(result.unwrap(), "Hello Jose\u{0301}.");
 
-    let result = greet("François");
-    assert_eq!(result.unwrap(), "Hello François.");
+    let result = greet("Franc\u{0327}ois");
+    assert_eq!(result.unwrap(), "Hello Franc\u{0327}ois.");
 }
 
 #[test]
 fn domain_should_truncate_long_unicode_names() {
-    // Note: Unicode characters may have different byte lengths
-    let long_unicode_name = "Müller-Öffentlicher-Straßenbahn-Überführung";
+    let long_unicode_name = "Mu\u{0308}ller-O\u{0308}ffentlicher-Straßenbahn-U\u{0308}berfu\u{0308}hrung";
     let result = greet(long_unicode_name);
 
     assert!(result.is_ok());

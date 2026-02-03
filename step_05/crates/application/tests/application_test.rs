@@ -4,7 +4,8 @@
 //! using mock adapters for input and output ports.
 
 use application::GreetingService;
-use domain::{GreetingWriter, NameReader, error::Result};
+use domain::ports::Result;
+use domain::{GreetingWriter, NameReader};
 
 /// Mock adapter that returns predefined names.
 struct MockNameReader {

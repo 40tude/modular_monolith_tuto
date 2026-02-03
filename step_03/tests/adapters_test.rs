@@ -7,7 +7,7 @@ use step_03::domain;
 // Traits must be in scope to call their methods (e.g., `input.read_name()`).
 use step_03::ports::{GreetingWriter, NameReader};
 
-use step_03::Result;
+use step_03::error::Result;
 
 // ============================================================================
 // Mock Implementations for Testing

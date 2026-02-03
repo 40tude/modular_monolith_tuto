@@ -1,10 +1,9 @@
+// main.rs
+
 use std::io::{self, Write};
-
-use step_02::Result;
 use step_02::domain;
+use step_02::error::Result;
 
-/// Application entry point.
-///
 /// Runs an interactive loop that asks the user for a name,
 /// applies greeting rules, and handles errors gracefully.
 fn main() -> Result<()> {

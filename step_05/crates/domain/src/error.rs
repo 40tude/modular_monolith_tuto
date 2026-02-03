@@ -1,7 +1,14 @@
-//! Error types for the domain crate.
+// error.rs
 
-/// Common error type alias using dynamic dispatch.
-pub type Error = Box<dyn std::error::Error>;
+//! Custom Error variants for the domain crate.
 
-/// Common result type alias.
+/// Errors produced by domain business rules.
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    /// The provided name is empty.
+    #[error("Name cannot be empty")]
+    EmptyName,
+}
+
+/// Used for business errors (EmptyName) in domain logic
 pub type Result<T> = std::result::Result<T, Error>;

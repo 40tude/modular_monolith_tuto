@@ -1,4 +1,4 @@
-//! Error types for the application crate.
+//! Application-layer error types.
 
 /// Errors produced by the application layer.
 #[derive(Debug, thiserror::Error)]

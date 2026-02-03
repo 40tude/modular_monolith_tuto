@@ -14,4 +14,4 @@ pub mod ports;
 
 pub use error::{Error, Result};
 pub use greeting::greet;
-pub use ports::{GreetingWriter, NameReader, PortError};
+pub use ports::{GreetingWriter, NameReader};

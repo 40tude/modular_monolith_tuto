@@ -1,18 +1,16 @@
-/// Console Input Adapter
-///
-/// Implements the `NameReader` port for reading names from standard input (stdin).
-use std::io::{self, Write};
+// console_input.rs
 
-use crate::Result;
+// Implements the `NameReader` port for reading names from standard input (stdin).
+use std::io::{self, Write};
+use crate::error::Result;
 use crate::ports;
 
-/// Adapter for reading names from the console (stdin).
-///
-/// This adapter prompts the user and reads a line of text from standard input.
+// Adapter for reading names from the console (stdin).
+// This adapter prompts the user and reads a line of text from standard input.
 pub struct ConsoleInput;
 
 impl ConsoleInput {
-    /// Creates a new `ConsoleInput` adapter.
+    // Creates a new `ConsoleInput` adapter.
     pub fn new() -> Self {
         Self
     }

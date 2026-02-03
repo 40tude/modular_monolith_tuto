@@ -3,8 +3,7 @@
 //! This service orchestrates the greeting flow by coordinating
 //! between input adapters, domain logic, and output adapters.
 
-use crate::error::Result;
-use domain;
+use crate::error::{Error, Result};
 
 /// Service that orchestrates the use cases.
 ///
@@ -40,7 +39,7 @@ impl GreetingService {
     ) -> Result<()> {
         loop {
             // Read name from input adapter
-            let name = input.read_name()?;
+            let name = input.read_name().map_err(Error::Adapter)?;
 
             // Exit condition
             if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
@@ -53,16 +52,9 @@ impl GreetingService {
                 continue;
             }
 
-            // Call domain logic (pure business rules)
-            match domain::greet(&name) {
-                Ok(greeting) => {
-                    // Write greeting to output adapter
-                    output.write_greeting(&greeting)?;
-                }
-                Err(e) => {
-                    eprintln!("Error: {}\n", e);
-                }
-            }
+            let greeting = domain::greet(&name)?;
+            output.write_greeting(&greeting).map_err(Error::Adapter)?;
+
             println!(); // Extra newline for readability
         }
 

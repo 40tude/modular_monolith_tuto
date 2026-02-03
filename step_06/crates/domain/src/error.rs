@@ -1,12 +1,13 @@
-//! Error types for the domain crate.
+//! Domain error types.
 
 /// Errors produced by domain business rules.
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     /// The provided name is empty.
-    #[error("Name cannot be empty")]
+    #[error("name cannot be empty")]
     EmptyName,
 }
 
-/// Used for business errors (EmptyName) in domain logic
+/// Domain-specific result alias.
 pub type Result<T> = std::result::Result<T, Error>;
+

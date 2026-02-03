@@ -2,8 +2,17 @@
 //!
 //! Ports define the contracts between the domain and the outside world.
 //! They are implemented by adapters which handle the actual I/O operations.
+//!
+//! Port methods return `Result<T, Box<dyn std::error::Error + Send + Sync>>`
+//! so adapters are free to return their own error types without depending
+//! on domain errors.
 
-use crate::error::Result;
+/// Boxed error type used by port trait methods.
+/// Send + Sync for thread-safety
+pub type PortError = Box<dyn std::error::Error + Send + Sync>;
+
+/// Use for infrastructure errors (I/O, network, etc.) in port features
+pub type Result<T> = std::result::Result<T, PortError>;
 
 /// Port for reading a name from an input source.
 ///
