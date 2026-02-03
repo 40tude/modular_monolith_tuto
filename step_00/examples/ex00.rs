@@ -1,5 +1,7 @@
+// ex00.rs
 // cargo run --example ex00
-// THE very first try
+//
+// The very first try
 
 fn main() {
     let greeting = greet("Bob");

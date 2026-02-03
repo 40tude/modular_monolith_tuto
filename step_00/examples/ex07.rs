@@ -1,3 +1,4 @@
+// ex07.rs
 //! Greeting service example demonstrating error handling,
 //! business rules, and basic I/O interaction.
 //!

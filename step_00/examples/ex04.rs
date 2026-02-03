@@ -1,3 +1,4 @@
+// ex04.rs
 // cargo run --example ex04
 // cargo test --example ex04
 //

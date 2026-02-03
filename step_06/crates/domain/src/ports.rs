@@ -8,7 +8,11 @@
 //! on domain errors.
 
 /// Boxed error type used by port trait methods.
+/// Send + Sync for thread-safety
 pub type PortError = Box<dyn std::error::Error + Send + Sync>;
+
+/// Use for infrastructure errors (I/O, network, etc.) in port features
+pub type Result<T> = std::result::Result<T, PortError>;
 
 /// Port for reading a name from an input source.
 ///
@@ -26,7 +30,7 @@ pub trait NameReader {
     /// Returns an error if the name cannot be read from the source.
     /// Note: This returns a generic error (Box<dyn Error>) not GreetingError,
     /// because I/O errors are infrastructure concerns, not domain errors.
-    fn read_name(&self) -> std::result::Result<String, PortError>;
+    fn read_name(&self) -> Result<String>;
 }
 
 /// Port for writing a greeting to an output destination.
@@ -47,5 +51,5 @@ pub trait GreetingWriter {
     /// # Errors
     ///
     /// Returns an error if the greeting cannot be written to the destination.
-    fn write_greeting(&self, greeting: &str) -> std::result::Result<(), PortError>;
+    fn write_greeting(&self, greeting: &str) -> Result<()>;
 }

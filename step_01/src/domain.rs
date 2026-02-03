@@ -1,4 +1,6 @@
-use crate::Result;
+// domain.rs
+
+use crate::error::Result;
 
 /// Business domain for greeting logic
 /// Generates a greeting according to business rules.

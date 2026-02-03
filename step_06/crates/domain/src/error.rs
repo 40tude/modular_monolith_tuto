@@ -8,5 +8,5 @@ pub enum Error {
     EmptyName,
 }
 
-/// Domain-specific result alias.
+/// Used for business errors (EmptyName) in domain logic
 pub type Result<T> = std::result::Result<T, Error>;

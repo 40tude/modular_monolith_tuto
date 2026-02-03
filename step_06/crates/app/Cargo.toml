@@ -11,5 +11,4 @@ path = "src/main.rs"
 [dependencies]
 application = { path = "../application" }
 adapter_console = { path = "../adapter_console" }
-
-[dev-dependencies]
+anyhow.workspace = true

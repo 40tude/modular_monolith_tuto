@@ -2,10 +2,9 @@
 //!
 //! Implements the `NameReader` port for reading names from standard input (stdin).
 
-use std::io::{self, Write};
-
-use domain::ports::PortError;
 use domain::NameReader;
+use domain::ports::Result;
+use std::io::{self, Write};
 
 /// Adapter for reading names from the console (stdin).
 ///
@@ -26,7 +25,7 @@ impl Default for ConsoleInput {
 }
 
 impl NameReader for ConsoleInput {
-    fn read_name(&self) -> Result<String, PortError> {
+    fn read_name(&self) -> Result<String> {
         // Prompt for input
         print!("> ");
         io::stdout().flush()?;

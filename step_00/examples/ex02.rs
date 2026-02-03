@@ -1,3 +1,4 @@
+// ex02.rs
 // cargo run --example ex02
 //
 // Return error and handle the different rules

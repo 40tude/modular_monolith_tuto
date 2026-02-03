@@ -1,3 +1,4 @@
+// ex06.rs
 // cargo run --example ex06
 // cargo test --example ex06
 //
