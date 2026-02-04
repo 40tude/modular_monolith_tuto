@@ -1,10 +1,12 @@
 // integration_test.rs
 
-/// Integration tests for the complete greeting flow
-///
-/// These tests verify that all crates work together correctly.
+// Integration tests for the complete greeting flow
+// These tests verify that all crates work together correctly.
+
 use application::GreetingService;
-use domain::{GreetingWriter, NameReader, ports::Result};
+use domain::errors::InfraError;
+use domain::ports::NameReaderError;
+use domain::{GreetingWriter, NameReader};
 
 // Mock Adapters for Testing
 struct MockNameReader {
@@ -22,7 +24,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String> {
+    fn read_name(&self) -> Result<String, NameReaderError> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -33,7 +35,7 @@ impl NameReader for MockNameReader {
     }
 }
 
-/// Mock adapter that captures written greetings.
+// Mock adapter that captures written greetings.
 struct MockGreetingWriter {
     greetings: std::cell::RefCell<Vec<String>>,
 }
@@ -51,7 +53,7 @@ impl MockGreetingWriter {
 }
 
 impl GreetingWriter for MockGreetingWriter {
-    fn write_greeting(&self, greeting: &str) -> Result<()> {
+    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn InfraError>> {
         self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }

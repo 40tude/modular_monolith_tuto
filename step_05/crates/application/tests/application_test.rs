@@ -1,12 +1,12 @@
 // application_test.rs
 
-//! Integration tests for the application crate.
-//!
-//! These tests demonstrate how to test the application layer
-//! using mock adapters for input and output ports.
+// Integration tests for the application crate.
+// These tests demonstrate how to test the application layer
+// using mock adapters for input and output ports.
 
 use application::GreetingService;
-use domain::ports::Result;
+use domain::errors::InfraError;
+use domain::ports::NameReaderError;
 use domain::{GreetingWriter, NameReader};
 
 /// Mock adapter that returns predefined names.
@@ -25,7 +25,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String> {
+    fn read_name(&self) -> Result<String, NameReaderError> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -54,7 +54,7 @@ impl MockGreetingWriter {
 }
 
 impl GreetingWriter for MockGreetingWriter {
-    fn write_greeting(&self, greeting: &str) -> Result<()> {
+    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn InfraError>> {
         self.greetings.borrow_mut().push(greeting.to_owned());
         Ok(())
     }

@@ -1,57 +1,45 @@
 // ports.rs
 
-//! Ports (Interfaces) for the Hexagonal Architecture.
-//!
-//! Ports define the contracts between the domain and the outside world.
-//! They are implemented by adapters which handle the actual I/O operations.
-//!
-//! Port methods return `Result<T, Box<dyn std::error::Error + Send + Sync>>`
-//! so adapters are free to return their own error types without depending
-//! on domain errors.
+use crate::errors::{DomainError, InfraError};
 
-/// Boxed error type used by port trait methods.
-/// Send + Sync for thread-safety
-pub type PortError = Box<dyn std::error::Error + Send + Sync>;
-
-/// Use for infrastructure errors (I/O, network, etc.) in port features
-pub type Result<T> = std::result::Result<T, PortError>;
-
-/// Port for reading a name from an input source.
-///
-/// Implementations (adapters) can read from:
-/// - Console (stdin)
-/// - File
-/// - HTTP request
-/// - Database
-/// - etc.
+// Port for reading a name
 pub trait NameReader {
-    /// Reads a name from the input source.
-    ///
-    /// # Errors
-    ///
-    /// Returns an error if the name cannot be read from the source.
-    /// Note: This returns a generic error (Box<dyn Error>) not GreetingError,
-    /// because I/O errors are infrastructure concerns, not domain errors.
-    fn read_name(&self) -> Result<String>;
+    fn read_name(&self) -> Result<String, NameReaderError>;
 }
 
-/// Port for writing a greeting to an output destination.
-///
-/// Implementations (adapters) can write to:
-/// - Console (stdout)
-/// - File
-/// - HTTP response
-/// - Database
-/// - etc.
+// Errors that can occur when retrieving names
+// Combines domain AND infrastructure errors for input operations
+#[derive(Debug)]
+pub enum NameReaderError {
+    Domain(DomainError),
+    Infrastructure(Box<dyn InfraError>),
+}
+
+impl std::fmt::Display for NameReaderError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Domain(e) => write!(f, "Domain error: {e}"),
+            Self::Infrastructure(e) => write!(f, "Infrastructure error: {e}"),
+        }
+    }
+}
+
+impl std::error::Error for NameReaderError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::Domain(e) => Some(e),
+            Self::Infrastructure(e) => Some(e.as_ref()),
+        }
+    }
+}
+
+impl From<DomainError> for NameReaderError {
+    fn from(e: DomainError) -> Self {
+        Self::Domain(e)
+    }
+}
+
+// Port for writing a greeting to an output destination.
 pub trait GreetingWriter {
-    /// Writes a greeting to the output destination.
-    ///
-    /// # Arguments
-    ///
-    /// * `greeting` - The greeting message to write
-    ///
-    /// # Errors
-    ///
-    /// Returns an error if the greeting cannot be written to the destination.
-    fn write_greeting(&self, greeting: &str) -> Result<()>;
+    fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn InfraError>>;
 }

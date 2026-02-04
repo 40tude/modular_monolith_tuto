@@ -1,18 +1,10 @@
 // greeting_service.rs
 
-//! Greeting Service - Application Layer.
-//!
-//! This service orchestrates the greeting flow by coordinating
-//! between input adapters, domain logic, and output adapters.
+// This service orchestrates the greeting flow by coordinating
+// between input adapters, domain logic, and output adapters.
 
-use crate::error::{Error, Result};
+use crate::errors::ApplicationError;
 
-/// Service that orchestrates the use cases.
-///
-/// This service:
-/// 1. Reads a name from an input source (via `NameReader` port)
-/// 2. Applies business rules (via `greet` domain function)
-/// 3. Writes the greeting to an output destination (via `GreetingWriter` port)
 pub struct GreetingService;
 
 impl GreetingService {
@@ -21,41 +13,25 @@ impl GreetingService {
         Self
     }
 
-    /// Runs an interactive greeting loop.
-    ///
-    /// Continuously reads names and generates greetings until
-    /// the user enters "quit" or "exit".
-    ///
-    /// # Arguments
-    ///
-    /// * `input` - Adapter for reading names
-    /// * `output` - Adapter for writing greetings
-    ///
-    /// # Errors
-    ///
-    /// Bubble-up the error returned by .read_name() and greet()
     pub fn run_greeting_loop(
         &self,
         input: &dyn domain::NameReader,
         output: &dyn domain::GreetingWriter,
-    ) -> Result<()> {
+    ) -> Result<(), ApplicationError> {
         loop {
-            // Read name from input adapter
-            let name = input.read_name().map_err(Error::Adapter)?;
+            let name = input.read_name()?;
 
-            // Exit condition
             if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
                 println!("\nGoodbye!");
                 break;
             }
 
-            // Skip empty input
             if name.is_empty() {
                 continue;
             }
 
             let greeting = domain::greet(&name)?;
-            output.write_greeting(&greeting).map_err(Error::Adapter)?;
+            output.write_greeting(&greeting)?;
 
             println!(); // Extra newline for readability
         }

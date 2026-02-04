@@ -1,23 +1,11 @@
 // greeting.rs
 
-/// Business domain for greeting logic
-///
-/// This module contains the core business rules for greeting generation.
-use crate::error::{Error, Result};
+use crate::errors::DomainError;
 
-/// Generates a greeting according to business rules.
-///
-/// Rules:
-/// - Default: "Hello {name}." with a maximum of 25 characters total
-/// - Special case: "Roberto" returns "Ciao Roberto!"
-/// - If the name is too long, it is truncated and suffixed with "..."
-///
-/// # Errors
-///
-/// Returns [`Error::EmptyName`] if the name is empty.
-pub fn greet(name: &str) -> Result<String> {
+// Generates a greeting according to business rules.
+pub fn greet(name: &str) -> Result<String, DomainError> {
     if name.is_empty() {
-        return Err(Error::EmptyName);
+        return Err(DomainError::EmptyName);
     }
 
     // Special case for Roberto
