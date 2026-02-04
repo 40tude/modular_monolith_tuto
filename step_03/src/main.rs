@@ -45,7 +45,7 @@ fn run_greeting_loop(
         let name = input.read_name()?;
 
         // Exit condition
-        if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") {
+        if name.eq_ignore_ascii_case("quit") || name.eq_ignore_ascii_case("exit") || name.eq_ignore_ascii_case("q!"){
             println!("\nGoodbye!");
             break;
         }
