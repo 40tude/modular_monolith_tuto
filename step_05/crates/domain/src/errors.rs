@@ -11,6 +11,8 @@ pub enum DomainError {
     EmptyName,
 }
 
+// Type alias.
+pub type Result<T> = std::result::Result<T, DomainError>;
 
 // Trait for infrastructure errors - implemented by adapters
 // This trait defines the contract for infrastructure errors without

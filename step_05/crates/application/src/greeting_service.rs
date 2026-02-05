@@ -3,7 +3,8 @@
 // This service orchestrates the greeting flow by coordinating
 // between input adapters, domain logic, and output adapters.
 
-use crate::errors::ApplicationError;
+// use crate::errors::ApplicationError;
+use crate::errors::Result;
 
 pub struct GreetingService;
 
@@ -17,7 +18,7 @@ impl GreetingService {
         &self,
         input: &dyn domain::NameReader,
         output: &dyn domain::GreetingWriter,
-    ) -> Result<(), ApplicationError> {
+    ) -> Result<()> {
         loop {
             let name = input.read_name()?;
 

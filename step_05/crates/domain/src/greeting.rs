@@ -1,9 +1,9 @@
 // greeting.rs
 
-use crate::errors::DomainError;
+use crate::errors::{DomainError, Result};
 
 // Generates a greeting according to business rules.
-pub fn greet(name: &str) -> Result<String, DomainError> {
+pub fn greet(name: &str) -> Result<String> {
     if name.is_empty() {
         return Err(DomainError::EmptyName);
     }

@@ -15,6 +15,9 @@ pub enum ApplicationError {
     Infrastructure(Box<dyn InfraError>),
 }
 
+// Type alias.
+pub type Result<T> = std::result::Result<T, ApplicationError>;
+
 impl From<Box<dyn InfraError>> for ApplicationError {
     fn from(e: Box<dyn InfraError>) -> Self {
         Self::Infrastructure(e)

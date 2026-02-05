@@ -2,11 +2,6 @@
 
 use crate::errors::{DomainError, InfraError};
 
-// Port for reading a name
-pub trait NameReader {
-    fn read_name(&self) -> Result<String, NameReaderError>;
-}
-
 // Errors that can occur when retrieving names
 // Combines domain AND infrastructure errors for input operations
 #[derive(Debug)]
@@ -37,6 +32,11 @@ impl From<DomainError> for NameReaderError {
     fn from(e: DomainError) -> Self {
         Self::Domain(e)
     }
+}
+
+// Port for reading a name
+pub trait NameReader {
+    fn read_name(&self) -> Result<String, NameReaderError>;
 }
 
 // Port for writing a greeting to an output destination.

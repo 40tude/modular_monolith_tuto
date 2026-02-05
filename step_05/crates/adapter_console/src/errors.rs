@@ -6,7 +6,7 @@ use domain::errors::InfraError;
 use std::any::Any;
 use thiserror::Error;
 
-/// Console-related infrastructure errors
+// Console-related infrastructure errors
 #[derive(Error, Debug)]
 pub enum ConsoleError {
     #[error("Console output error: {0}")]

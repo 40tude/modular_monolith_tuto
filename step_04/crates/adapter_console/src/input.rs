@@ -4,7 +4,8 @@
 //!
 //! Implements the `NameReader` port for reading names from standard input (stdin).
 
-use crate::error::Result;
+use crate::error::{Error, Result};
+
 use domain::NameReader;
 use std::io::{self, Write};
 
