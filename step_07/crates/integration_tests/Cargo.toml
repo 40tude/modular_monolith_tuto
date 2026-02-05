@@ -1,0 +1,10 @@
+[package]
+name = "integration_tests"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+domain = { path = "../domain" }
+application = { path = "../application" }
+adapter_console = { path = "../adapter_console" }

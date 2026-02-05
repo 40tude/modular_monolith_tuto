@@ -30,11 +30,18 @@ impl GreetingService {
                 break;
             }
 
-            if name.is_empty() {
-                continue;
-            }
+            // if name.is_empty() {
+            //     continue;
+            // }
+            // let greeting = domain::greet(&name)?;
 
-            let greeting = domain::greet(&name)?;
+            let greeting = match domain::greet(&name) {
+                Ok(g) => g,
+                Err(e) => {
+                    println!("Error: {e}\n");
+                    continue;
+                }
+            };
             output.write_greeting(&greeting)?;
 
             println!(); // Extra newline for readability

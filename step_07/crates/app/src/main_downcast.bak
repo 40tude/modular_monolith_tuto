@@ -1,0 +1,56 @@
+// main.rs
+
+use adapter_console::{ConsoleInput, ConsoleOutput, errors::ConsoleError};
+use application::GreetingService;
+use application::errors::ApplicationError;
+
+use anyhow::Result;
+
+fn main() -> Result<()> {
+    println!("=== Greeting Service (Step 05 - Modular Monolith & Hexagonal Architecture) ===");
+    println!("Enter a name to greet (or 'quit' to exit):\n");
+
+    // Dependency injection: Create adapters
+    let input = ConsoleInput::new();
+    let output = ConsoleOutput::new();
+
+    // Create application service, run and handle error is any
+    let service = GreetingService::new();
+    match service.run_greeting_loop(&input, &output) {
+        Ok(()) => println!("Success!"),
+        Err(e) => {
+            println!("Error:");
+            handle_error(e);
+        }
+    }
+    Ok(())
+}
+
+// Demonstrates how to handle different error types at the application boundary
+fn handle_error(error: ApplicationError) {
+    match error {
+        // Domain errors from entity validation
+        ApplicationError::Domain(domain_err) => {
+            eprintln!("Business Error: {domain_err}");
+            eprintln!("   -> User-facing message: Please check your input.\n");
+        }
+
+        // Infrastructure errors from output operations (disk, network, etc.)
+        ApplicationError::Infrastructure(infra_err) => {
+            eprintln!("Output System Error: {infra_err}");
+            // Downcast to get specific error details
+            if let Some(console_err) = infra_err.as_any().downcast_ref::<ConsoleError>() {
+                match console_err {
+                    ConsoleError::Io(io_err) => {
+                        eprintln!("   -> I/O error kind: {:?}", io_err.kind());
+                        eprintln!("   -> I/O error message: {io_err}");
+                    }
+                    ConsoleError::Output(msg) => {
+                        eprintln!("   -> Output error: {msg}");
+                    }
+                }
+            }
+            eprintln!("   -> Action: Log error, retry, or alert operations.\n");
+        }
+    }
+}
