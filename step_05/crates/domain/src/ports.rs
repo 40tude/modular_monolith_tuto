@@ -1,6 +1,16 @@
 // ports.rs
 
-use crate::errors::{DomainError, InfraError};
+use crate::errors::DomainError;
+use std::any::Any;
+
+// Trait for infrastructure errors - implemented by adapters
+// This trait defines the contract for infrastructure errors without
+// coupling the domain to specific infrastructure implementations.
+// Adapters implement this trait for their specific error types.
+pub trait InfraError: std::error::Error + Send + Sync + 'static {
+    /// Returns self as Any for downcasting to concrete error types
+    fn as_any(&self) -> &dyn Any;
+}
 
 // Errors that can occur when retrieving names
 // Combines domain AND infrastructure errors for input operations

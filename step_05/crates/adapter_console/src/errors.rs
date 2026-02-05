@@ -2,7 +2,7 @@
 
 // Adapter-specific error types implementing the domain's InfraError trait
 
-use domain::errors::InfraError;
+use domain::InfraError;
 use std::any::Any;
 use thiserror::Error;
 

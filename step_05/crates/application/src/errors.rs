@@ -2,8 +2,8 @@
 
 // Errors produced by the application layer.
 
-use domain::errors::{DomainError, InfraError};
-use domain::ports::NameReaderError;
+use domain::errors::DomainError;
+use domain::{InfraError, NameReaderError};
 use thiserror::Error;
 
 #[derive(Debug, Error)]

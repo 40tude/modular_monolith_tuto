@@ -4,9 +4,7 @@
 // These tests verify that all crates work together correctly.
 
 use application::GreetingService;
-use domain::errors::InfraError;
-use domain::ports::NameReaderError;
-use domain::{GreetingWriter, NameReader};
+use domain::{GreetingWriter, InfraError, NameReader, NameReaderError};
 
 // Mock Adapters for Testing
 struct MockNameReader {

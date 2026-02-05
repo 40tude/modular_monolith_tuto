@@ -4,7 +4,7 @@
 // Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
 
 use domain::GreetingWriter;
-use domain::errors::InfraError;
+use domain::InfraError;
 
 // Adapter for writing greetings to the console (stdout).
 // This adapter prints greeting messages to standard output.

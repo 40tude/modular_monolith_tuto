@@ -8,8 +8,7 @@
 
 use adapter_console::errors::ConsoleError;
 use adapter_console::{ConsoleInput, ConsoleOutput};
-use domain::errors::InfraError;
-use domain::{GreetingWriter, NameReader};
+use domain::{GreetingWriter, InfraError, NameReader};
 use std::io::{self, ErrorKind};
 
 /// Verifies that `ConsoleOutput` correctly implements `GreetingWriter`.
