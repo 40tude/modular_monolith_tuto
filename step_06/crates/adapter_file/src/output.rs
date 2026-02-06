@@ -2,7 +2,6 @@
 
 use crate::errors::FileError;
 use domain::{GreetingWriter, InfraError};
-use std::fs;
 use std::path::PathBuf;
 
 pub struct FileOutput {
@@ -11,13 +10,15 @@ pub struct FileOutput {
 
 impl FileOutput {
     pub fn new(path: impl Into<PathBuf>) -> Self {
-        Self { path: path.into() }
+        let path = path.into();
+        let _ = std::fs::remove_file(&path);
+        Self { path }
     }
 }
 
 impl GreetingWriter for FileOutput {
     fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn InfraError>> {
-        fs::write(&self.path, greeting)
+        std::fs::write(&self.path, format!("{greeting}\n"))
             .map_err(|e| Box::new(FileError::from(e)) as Box<dyn InfraError>)
     }
 }

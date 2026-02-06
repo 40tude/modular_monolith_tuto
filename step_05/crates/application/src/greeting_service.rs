@@ -6,6 +6,7 @@
 // use crate::errors::ApplicationError;
 use crate::errors::Result;
 
+#[derive(Default)]
 pub struct GreetingService;
 
 impl GreetingService {
@@ -51,8 +52,3 @@ impl GreetingService {
     }
 }
 
-impl Default for GreetingService {
-    fn default() -> Self {
-        Self::new()
-    }
-}

@@ -10,18 +10,13 @@ use domain::GreetingWriter;
 /// Adapter for writing greetings to the console (stdout).
 ///
 /// This adapter prints greeting messages to standard output.
+#[derive(Default)]
 pub struct ConsoleOutput;
 
 impl ConsoleOutput {
     /// Creates a new `ConsoleOutput` adapter.
     pub fn new() -> Self {
         Self
-    }
-}
-
-impl Default for ConsoleOutput {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

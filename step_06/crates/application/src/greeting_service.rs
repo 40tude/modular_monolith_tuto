@@ -6,10 +6,10 @@
 // use crate::errors::ApplicationError;
 use crate::errors::Result;
 
+#[derive(Default)]
 pub struct GreetingService;
 
 impl GreetingService {
-    /// Creates a new greeting service.
     pub fn new() -> Self {
         Self
     }
@@ -38,16 +38,20 @@ impl GreetingService {
                 }
             };
             output.write_greeting(&greeting)?;
-
             println!(); // Extra newline for readability
         }
-
         Ok(())
     }
-}
 
-impl Default for GreetingService {
-    fn default() -> Self {
-        Self::new()
+    pub fn run_greeting_once(
+        &self,
+        input: &dyn domain::NameReader,
+        output: &dyn domain::GreetingWriter,
+    ) -> Result<()> {
+        let name = input.read_name()?;
+        let greeting = domain::greet(&name)?;
+        output.write_greeting(&greeting)?;
+        println!("\nGoodbye!");
+        Ok(())
     }
 }

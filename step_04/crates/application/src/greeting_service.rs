@@ -13,6 +13,7 @@ use crate::error::Result;
 /// 1. Reads a name from an input source (via `NameReader` port)
 /// 2. Applies business rules (via `greet` domain function)
 /// 3. Writes the greeting to an output destination (via `GreetingWriter` port)
+#[derive(Default)]
 pub struct GreetingService;
 
 impl GreetingService {
@@ -74,8 +75,3 @@ impl GreetingService {
     }
 }
 
-impl Default for GreetingService {
-    fn default() -> Self {
-        Self::new()
-    }
-}

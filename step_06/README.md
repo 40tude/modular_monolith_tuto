@@ -10,6 +10,8 @@
 ## Usage
 
 ```powershell
+cargo test -p adapter_file
+
 cargo test -p adapter_console
 cargo test -p adapter_console --test adapter_console_test
 cargo test -p adapter_console --test adapter_console_test console # any test containing "console"

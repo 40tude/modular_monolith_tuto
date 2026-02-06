@@ -9,18 +9,13 @@ use std::io::{self, Write};
 
 // Adapter for reading names from the console (stdin).
 // This adapter prompts the user and reads a line of text from standard input.
+#[derive(Default)]
 pub struct ConsoleInput;
 
 impl ConsoleInput {
     // Creates a new `ConsoleInput` adapter.
     pub fn new() -> Self {
         Self
-    }
-}
-
-impl Default for ConsoleInput {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

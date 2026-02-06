@@ -8,16 +8,11 @@ use crate::ports;
 // This adapter prints greeting messages to standard output.
 pub struct ConsoleOutput;
 
+#[derive(Default)]
 impl ConsoleOutput {
     // Creates a new `ConsoleOutput` adapter.
     pub fn new() -> Self {
         Self
-    }
-}
-
-impl Default for ConsoleOutput {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
