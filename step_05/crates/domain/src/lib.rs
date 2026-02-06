@@ -6,4 +6,4 @@ pub mod ports;
 
 // Re-export
 pub use greeting::greet;
-pub use ports::{GreetingWriter, InfraError, NameReader, NameReaderError};
+pub use ports::{GreetingWriter, InfraError, NameReader};

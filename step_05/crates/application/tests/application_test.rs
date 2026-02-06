@@ -6,7 +6,7 @@
 
 use application::GreetingService;
 use domain::InfraError;
-use domain::{GreetingWriter, NameReader, NameReaderError};
+use domain::{GreetingWriter, NameReader};
 
 /// Mock adapter that returns predefined names.
 struct MockNameReader {
@@ -24,7 +24,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String, NameReaderError> {
+    fn read_name(&self) -> Result<String, Box<dyn InfraError>> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);

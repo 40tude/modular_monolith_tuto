@@ -13,11 +13,16 @@ fn main() -> Result<()> {
     let input = ConsoleInput::new();
     let output = ConsoleOutput::new();
 
-    // Create application service and run
+    // Create application service and run either in a loop or once
     let service = GreetingService::new();
+
+    // service
+    //     .run_greeting_loop(&input, &output)
+    //     .context("Failed to run interactive loop")?;
+
     service
-        .run_greeting_loop(&input, &output)
-        .context("Failed to run interactive loop")?;
+        .run_greeting_once(&input, &output)
+        .context("Failed to run the greeting service once")?;
 
     Ok(())
 }

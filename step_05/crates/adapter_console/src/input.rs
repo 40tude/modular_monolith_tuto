@@ -3,12 +3,11 @@
 // Console Input Adapter.
 // Implements the `NameReader` port for reading names from standard input (stdin).
 
-use crate::errors::ConsoleError;
-use domain::{NameReader, NameReaderError};
+use crate::errors::into_infra;
+use domain::{InfraError, NameReader};
 use std::io::{self, Write};
 
 // Adapter for reading names from the console (stdin).
-// This adapter prompts the user and reads a line of text from standard input.
 #[derive(Default)]
 pub struct ConsoleInput;
 
@@ -20,21 +19,15 @@ impl ConsoleInput {
 }
 
 impl NameReader for ConsoleInput {
-    fn read_name(&self) -> Result<String, NameReaderError> {
-        // Prompt for input
+    fn read_name(&self) -> Result<String, Box<dyn InfraError>> {
         print!("> ");
-        io::stdout()
-            .flush()
-            .map_err(|e| NameReaderError::Infrastructure(Box::new(ConsoleError::from(e))))?;
+        io::stdout().flush().map_err(into_infra)?;
+        //  .map_err(|e| Box::new(ConsoleError::from(e)) as Box<dyn InfraError>)?;
 
-        // Read user input
         let mut input = String::new();
-        io::stdin()
-            .read_line(&mut input)
-            .map_err(|e| NameReaderError::Infrastructure(Box::new(ConsoleError::from(e))))?;
+        io::stdin().read_line(&mut input).map_err(into_infra)?;
+        //                               .map_err(|e| Box::new(ConsoleError::from(e)) as Box<dyn InfraError>)?;
 
-        let name = input.trim().to_string();
-
-        Ok(name)
+        Ok(input.trim().to_string())
     }
 }

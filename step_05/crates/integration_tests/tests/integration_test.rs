@@ -4,7 +4,7 @@
 // These tests verify that all crates work together correctly.
 
 use application::GreetingService;
-use domain::{GreetingWriter, InfraError, NameReader, NameReaderError};
+use domain::{GreetingWriter, InfraError, NameReader};
 
 // Mock Adapters for Testing
 struct MockNameReader {
@@ -22,7 +22,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String, NameReaderError> {
+    fn read_name(&self) -> Result<String, Box<dyn InfraError>> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);

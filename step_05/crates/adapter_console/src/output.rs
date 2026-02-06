@@ -3,11 +3,12 @@
 // Console Output Adapter.
 // Implements the `GreetingWriter` port for writing greetings to standard output (stdout).
 
+use crate::errors::into_infra;
 use domain::GreetingWriter;
 use domain::InfraError;
+use std::io::{self, Write};
 
 // Adapter for writing greetings to the console (stdout).
-// This adapter prints greeting messages to standard output.
 #[derive(Default)]
 pub struct ConsoleOutput;
 
@@ -20,9 +21,10 @@ impl ConsoleOutput {
 
 impl GreetingWriter for ConsoleOutput {
     fn write_greeting(&self, greeting: &str) -> Result<(), Box<dyn InfraError>> {
-        // In a real scenario, println! could fail (e.g., stdout redirected to full disk)
-        // For this example, we assume it always succeeds
-        println!("{greeting}");
+        // println!("{greeting}"); is replaced by the next expression to show
+        // how to handle error (e.g., stdout redirected to full disk)
+        writeln!(io::stdout(), "{greeting}").map_err(into_infra)?;
+        //                                  .map_err(|e| Box::new(ConsoleError::from(e)) as Box<dyn InfraError>)?;
         Ok(())
     }
 }

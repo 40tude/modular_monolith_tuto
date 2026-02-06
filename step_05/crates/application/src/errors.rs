@@ -1,9 +1,7 @@
 // error.rs
 
-// Errors produced by the application layer.
-
+use domain::InfraError;
 use domain::errors::DomainError;
-use domain::{InfraError, NameReaderError};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -21,14 +19,5 @@ pub type Result<T> = std::result::Result<T, ApplicationError>;
 impl From<Box<dyn InfraError>> for ApplicationError {
     fn from(e: Box<dyn InfraError>) -> Self {
         Self::Infrastructure(e)
-    }
-}
-
-impl From<NameReaderError> for ApplicationError {
-    fn from(e: NameReaderError) -> Self {
-        match e {
-            NameReaderError::Domain(d) => Self::Domain(d),
-            NameReaderError::Infrastructure(i) => Self::Infrastructure(i),
-        }
     }
 }

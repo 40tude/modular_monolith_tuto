@@ -11,12 +11,12 @@ fn main() -> Result<()> {
     println!("Enter a name to greet (or 'quit' to exit):\n");
 
     // Dependency injection: Create adapters
-    let input = ConsoleInput::new();
+    let mut input = ConsoleInput::new();
     let output = ConsoleOutput::new();
 
     // Create application service and run
     let service = GreetingService::new();
-    service.run_greeting_loop(&input, &output)?;
+    service.run_greeting_loop(&mut input, &output)?;
 
     Ok(())
 }
