@@ -28,8 +28,8 @@ impl GreetingWriter for FileOutput {
             .append(true)
             .open(&self.path)
             .map_err(into_infra)?;
-        writeln!(file, "{greeting}").map_err(into_infra)?;
+        file.write_all(format!("{greeting}\n").as_bytes())
+            .map_err(into_infra)?;
         Ok(())
     }
 }
-// Rust guideline compliant 2025-05-07
