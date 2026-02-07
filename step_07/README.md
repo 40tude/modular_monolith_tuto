@@ -5,7 +5,7 @@
 > rm -rf .cargo   # or: mv .cargo .cargo.bak
 > ```
 
-* File adapter support multiple line
+* File adapter support multiple lines
 
 
 ## Notes
