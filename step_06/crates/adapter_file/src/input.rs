@@ -1,7 +1,7 @@
 // input.rs
 
 use crate::errors::FileError;
-use domain::{NameReader, NameReaderError};
+use domain::{InfraError, NameReader};
 use std::fs;
 use std::path::PathBuf;
 
@@ -27,7 +27,7 @@ impl FileInput {
 }
 
 impl NameReader for FileInput {
-    fn read_name(&self) -> Result<String, NameReaderError> {
+    fn read_name(&self) -> Result<String, Box<dyn InfraError>> {
         Ok(self.name.clone())
     }
 }

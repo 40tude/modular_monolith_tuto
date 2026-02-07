@@ -8,26 +8,20 @@ use application::GreetingService;
 use anyhow::{Context, Result};
 
 fn main() -> Result<()> {
-    println!("=== Greeting Service (Step 06 - File Adapter Demo) ===");
+    println!("=== Greeting Service (Step 07 - File Adapter Demo) ===");
 
     // Dependency injection: Create file-based adapters
     // let output = ConsoleOutput::new();
-    // let input = ConsoleInput::new();
+    // let mut input = ConsoleInput::new();
 
     let output = FileOutput::new("output.txt");
-    let input = match FileInput::new("input.txt") {
-        Ok(input) => input,
-        Err(e) => {
-            eprintln!("Failed to read input file: {e}");
-            return Ok(());
-        }
-    };
+    let mut input = FileInput::new("input.txt");
 
     // Create application service and run
     let service = GreetingService::new();
     service
-        .run_greeting_once(&input, &output)
-        // .run_greeting_loop(&input, &output)
+        // .run_greeting_once(&mut input, &output)
+        .run_greeting_loop(&mut input, &output)
         .context("Failed to run greeting service")?;
 
     Ok(())

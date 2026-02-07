@@ -12,7 +12,7 @@ pub trait InfraError: std::error::Error + Send + Sync + 'static {
 
 // Port for reading a name from an input source.
 pub trait NameReader {
-    fn read_name(&self) -> Result<String, Box<dyn InfraError>>;
+    fn read_name(&mut self) -> Result<String, Box<dyn InfraError>>;
 }
 
 // Port for writing a greeting to an output destination.

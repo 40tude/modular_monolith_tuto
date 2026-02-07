@@ -1,0 +1,15 @@
+[package]
+name = "app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "step_07"
+path = "src/main.rs"
+
+[dependencies]
+application = { path = "../application" }
+adapter_console = { path = "../adapter_console" }
+adapter_file = { path = "../adapter_file" }
+anyhow.workspace = true

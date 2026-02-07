@@ -22,7 +22,7 @@ impl MockNameReader {
 }
 
 impl NameReader for MockNameReader {
-    fn read_name(&self) -> Result<String, Box<dyn InfraError>> {
+    fn read_name(&mut self) -> Result<String, Box<dyn InfraError>> {
         let idx = self.index.get();
         if idx < self.names.len() {
             self.index.set(idx + 1);
@@ -61,13 +61,13 @@ impl GreetingWriter for MockGreetingWriter {
 #[test]
 fn domain_greet_function() {
     // Arrange
-    let reader = MockNameReader::new(vec!["Alice", "Bob", "quit"]);
+    let mut reader = MockNameReader::new(vec!["Alice", "Bob", "quit"]);
     // let reader = MockNameReader::new(vec!["Alice", "Bob"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
     // Act
-    let result = service.run_greeting_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&mut reader, &writer);
 
     // Assert
     assert!(result.is_ok());
@@ -79,12 +79,12 @@ fn domain_greet_function() {
 
 #[test]
 fn service_with_mocks() {
-    let reader = MockNameReader::new(vec!["Roberto", "quit"]);
+    let mut reader = MockNameReader::new(vec!["Roberto", "quit"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
     // Act
-    let result = service.run_greeting_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&mut reader, &writer);
 
     // Assert
     assert!(result.is_ok());
@@ -95,12 +95,12 @@ fn service_with_mocks() {
 
 #[test]
 fn complete_flow_normal_greeting() {
-    let reader = MockNameReader::new(vec!["World", "quit"]);
+    let mut reader = MockNameReader::new(vec!["World", "quit"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
     // Act
-    let result = service.run_greeting_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&mut reader, &writer);
 
     // Assert
     assert!(result.is_ok());
@@ -111,12 +111,12 @@ fn complete_flow_normal_greeting() {
 
 #[test]
 fn complete_flow_long_name() {
-    let reader = MockNameReader::new(vec!["VeryLongNameThatWillBeTruncated", "quit"]);
+    let mut reader = MockNameReader::new(vec!["VeryLongNameThatWillBeTruncated", "quit"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
     // Act
-    let result = service.run_greeting_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&mut reader, &writer);
 
     // Assert
     assert!(result.is_ok());
@@ -128,12 +128,12 @@ fn complete_flow_long_name() {
 
 #[test]
 fn empty_name_error_handling() {
-    let reader = MockNameReader::new(vec!["", "quit"]);
+    let mut reader = MockNameReader::new(vec!["", "quit"]);
     let writer = MockGreetingWriter::new();
     let service = GreetingService::new();
 
     // Act
-    let result = service.run_greeting_loop(&reader, &writer);
+    let result = service.run_greeting_loop(&mut reader, &writer);
 
     // Assert
     assert!(result.is_ok());

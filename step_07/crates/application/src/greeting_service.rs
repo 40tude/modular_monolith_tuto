@@ -15,7 +15,7 @@ impl GreetingService {
 
     pub fn run_greeting_once(
         &self,
-        input: &dyn domain::NameReader,
+        input: &mut dyn domain::NameReader,
         output: &dyn domain::GreetingWriter,
     ) -> Result<()> {
         let name = input.read_name()?;
@@ -27,7 +27,7 @@ impl GreetingService {
 
     pub fn run_greeting_loop(
         &self,
-        input: &dyn domain::NameReader,
+        input: &mut dyn domain::NameReader,
         output: &dyn domain::GreetingWriter,
     ) -> Result<()> {
         loop {
