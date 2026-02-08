@@ -3,8 +3,8 @@
 //! business rules, and basic I/O interaction.
 //!
 //! Run with:
-//! - cargo run --example ex06
-//! - cargo test --example ex06
+//! - cargo run --example ex07
+//! - cargo test --example ex07
 
 use std::io::{self, Write};
 

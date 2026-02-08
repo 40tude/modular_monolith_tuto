@@ -49,7 +49,6 @@ impl GreetingService {
                 || name.eq_ignore_ascii_case("exit")
                 || name.eq_ignore_ascii_case("q!")
             {
-                println!("\nGoodbye!");
                 break;
             }
 
@@ -68,7 +67,6 @@ impl GreetingService {
                     eprintln!("Error: {}\n", e);
                 }
             }
-            println!(); // Extra newline for readability
         }
 
         Ok(())

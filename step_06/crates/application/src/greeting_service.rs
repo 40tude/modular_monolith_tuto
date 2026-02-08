@@ -21,7 +21,6 @@ impl GreetingService {
         let name = input.read_name()?;
         let greeting = domain::greet(&name)?;
         output.write_greeting(&greeting)?;
-        println!("\nGoodbye!");
         Ok(())
     }
 
@@ -37,22 +36,18 @@ impl GreetingService {
                 || name.eq_ignore_ascii_case("exit")
                 || name.eq_ignore_ascii_case("q!")
             {
-                println!("\nGoodbye!");
                 break;
             }
 
             let greeting = match domain::greet(&name) {
                 Ok(g) => g,
                 Err(e) => {
-                    println!("Error: {e}\n");
+                    eprintln!("Error: {e}\n");
                     continue;
                 }
             };
             output.write_greeting(&greeting)?;
-
-            println!(); // Extra newline for readability
         }
-
         Ok(())
     }
 }

@@ -6,9 +6,9 @@ use crate::ports;
 
 // Adapter for writing greetings to the console (stdout).
 // This adapter prints greeting messages to standard output.
+#[derive(Default)]
 pub struct ConsoleOutput;
 
-#[derive(Default)]
 impl ConsoleOutput {
     // Creates a new `ConsoleOutput` adapter.
     pub fn new() -> Self {

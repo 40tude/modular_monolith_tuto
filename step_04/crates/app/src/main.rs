@@ -17,6 +17,6 @@ fn main() -> Result<()> {
     // Create application service and run
     let service = GreetingService::new();
     service.run_greeting_loop(&mut input, &output)?;
-
+    println!("\nGoodbye!");
     Ok(())
 }

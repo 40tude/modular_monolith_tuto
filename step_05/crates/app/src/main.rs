@@ -24,5 +24,6 @@ fn main() -> Result<()> {
         .run_greeting_once(&input, &output)
         .context("Failed to run the greeting service once")?;
 
+    println!("\nGoodbye!");
     Ok(())
 }

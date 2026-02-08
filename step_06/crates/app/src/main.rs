@@ -11,10 +11,10 @@ fn main() -> Result<()> {
     println!("=== Greeting Service (Step 06 - File Adapter Demo) ===");
 
     // Dependency injection: Create file-based adapters
-    // let output = ConsoleOutput::new();
+    let output = ConsoleOutput::new();
     // let input = ConsoleInput::new();
 
-    let output = FileOutput::new("output.txt");
+    // let output = FileOutput::new("output.txt");
     let input = match FileInput::new("input.txt") {
         Ok(input) => input,
         Err(e) => {
@@ -30,5 +30,6 @@ fn main() -> Result<()> {
         // .run_greeting_loop(&input, &output)
         .context("Failed to run greeting service")?;
 
+    println!("\nGoodbye!");
     Ok(())
 }

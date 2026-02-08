@@ -24,5 +24,6 @@ fn main() -> Result<()> {
         .run_greeting_loop(&mut input, &output)
         .context("Failed to run greeting service")?;
 
+    println!("\nGoodbye!");
     Ok(())
 }
