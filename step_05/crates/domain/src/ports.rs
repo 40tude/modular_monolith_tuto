@@ -6,7 +6,9 @@ use std::any::Any;
 // contract for infrastructure errors without coupling the domain to specific
 // infrastructure implementations.
 pub trait InfraError: std::error::Error + Send + Sync + 'static {
-    /// Returns self as Any for downcasting to concrete error types.
+    /// Returns self as Any (see impl InfraError for ConsoleError)
+    /// This will allow downcasting from abstract object to concrete types.
+    /// See crates/adapter_console/tests/adapter_console_test.rs/console_error_implements_infra_error_and_downcasts()
     fn as_any(&self) -> &dyn Any;
 }
 
