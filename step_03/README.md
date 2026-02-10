@@ -1,4 +1,4 @@
-# Step 03: Move toward Hexagonal Architecture (Ports & Adapters)
+# Step 03
 
 > **Warning (Linux/macOS users):** The `.cargo/` folder contains Windows-specific configuration (custom target-dir for OneDrive, CPU flags). Delete or rename before building:
 > ```bash
@@ -22,3 +22,5 @@ cargo test --test adapters_test
 cargo test --test domain_test
 cargo test --test integration_test
 ```
+
+## Notes

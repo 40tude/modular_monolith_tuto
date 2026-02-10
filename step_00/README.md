@@ -12,3 +12,5 @@
 cargo run --example ex00
 cargo run --example ex07
 ```
+
+## Notes

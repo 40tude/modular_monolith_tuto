@@ -1,4 +1,4 @@
-# Step 06:
+# Step 06
 
 > **Warning (Linux/macOS users):** The `.cargo/` folder contains Windows-specific configuration (custom target-dir for OneDrive, CPU flags). Delete or rename before building:
 > ```bash
@@ -22,3 +22,5 @@ cargo test -p integration_tests
 cargo run -p app
 cargo run
 ```
+
+## Notes
