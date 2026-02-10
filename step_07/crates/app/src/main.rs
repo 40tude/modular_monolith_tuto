@@ -20,7 +20,7 @@ fn main() -> Result<()> {
     // Create application service and run
     let service = GreetingService::new();
     service
-        // .run_greeting_once(&mut input, &output)
+        //.run_greeting_once(&mut input, &output)
         .run_greeting_loop(&mut input, &output)
         .context("Failed to run greeting service")?;
 
